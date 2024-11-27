@@ -3,30 +3,24 @@
     <div class="mv__inner">
         <div class="mv__slider swiper js-mv-swiper">
             <div class="mv__wrapper swiper-wrapper">
+                <?php
+                $mv_slides = SCF::get('mv_slides'); 
+                if (!empty($mv_slides)) :
+                    foreach ($mv_slides as $slide) :
+                        $image_pc = wp_get_attachment_image_url($slide['image_pc'], 'full');
+                        $image_sp = wp_get_attachment_image_url($slide['image_sp'], 'full');
+                        $alt_text = esc_attr($slide['alt_text']);
+                ?>
                 <div class="mv__slide swiper-slide">
                     <picture>
-                        <source srcset="./assets/images/common/mv-1-pc.jpg" media="(min-width: 768px)" />
-                        <img src="./assets/images/common/mv-1-sp.jpg" alt="海の中に亀がいる写真" />
+                        <source srcset="<?php echo esc_url($image_pc); ?>" media="(min-width: 768px)" />
+                        <img src="<?php echo esc_url($image_sp); ?>" alt="<?php echo $alt_text; ?>" />
                     </picture>
                 </div>
-                <div class="mv__slide swiper-slide">
-                    <picture>
-                        <source srcset="./assets/images/common/mv-2-pc.jpg" media="(min-width: 768px)" />
-                        <img src="./assets/images/common/mv-2-sp.jpg" alt="海の中で亀とダイバー2人がいる写真" />
-                    </picture>
-                </div>
-                <div class="mv__slide swiper-slide">
-                    <picture>
-                        <source srcset="./assets/images/common/mv-3-pc.jpg" media="(min-width: 768px)" />
-                        <img src="./assets/images/common/mv-3-sp.jpg" alt="海と空のが写っている写真" />
-                    </picture>
-                </div>
-                <div class="mv__slide swiper-slide">
-                    <picture>
-                        <source srcset="./assets/images/common/mv-4-pc.jpg" media="(min-width: 768px)" />
-                        <img src="./assets/images/common/mv-4-sp.jpg" alt="海と砂が広がっている写真" />
-                    </picture>
-                </div>
+                <?php
+                    endforeach;
+                endif;
+                ?>
             </div>
             <div class="mv__title">
                 <h1 class="mv__title-main">diving</h1>
@@ -35,6 +29,7 @@
         </div>
     </div>
 </div>
+
 <main>
     <section class="campaign campaign-layout">
         <div class="campaign__inner inner">
