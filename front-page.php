@@ -29,7 +29,6 @@
         </div>
     </div>
 </div>
-
 <main>
     <section class="campaign campaign-layout">
         <div class="campaign__inner inner">

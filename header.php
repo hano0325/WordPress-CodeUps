@@ -27,9 +27,7 @@ $site = esc_url( home_url( '/site/' ) );
     <?php wp_body_open(); ?>
     <header class="header">
         <div class="header__inner">
-            <?php if(is_front_page()): ?>
             <div class="header__logo">
-                <?php endif; ?>
                 <a href="<?php echo $home;?>">
                     <img src="<?php echo get_template_directory_uri() ?>/assets/images/common/CodeUps.svg"
                         alt="Codeups" /></a>
@@ -88,16 +86,24 @@ $site = esc_url( home_url( '/site/' ) );
                                         <a
                                             href="<?php echo esc_url(get_post_type_archive_link('campaign')); ?>">キャンペーン</a>
                                     </li>
-                                    <?php $campaign_categories = get_terms(array('taxonomy' => 'campaign_category','hide_empty' => true,));
-                                        if (!empty($campaign_categories) && !is_wp_error($campaign_categories)) :
-                                            foreach ($campaign_categories as $category) :
-                                        ?>
                                     <li class="menu__nav-item-sub">
-                                        <a href="<?php echo esc_url(get_term_link($category)); ?>">
-                                            <?php echo esc_html($category->name); ?>
+                                        <a
+                                            href="<?php echo esc_url(get_post_type_archive_link('campaign') . '?tab=tab02'); ?>">
+                                            ライセンス講習
                                         </a>
                                     </li>
-                                    <?php endforeach; endif;?>
+                                    <li class="menu__nav-item-sub">
+                                        <a
+                                            href="<?php echo esc_url(get_post_type_archive_link('campaign') . '?tab=tab03'); ?>">
+                                            ファンダイビング
+                                        </a>
+                                    </li>
+                                    <li class="menu__nav-item-sub">
+                                        <a
+                                            href="<?php echo esc_url(get_post_type_archive_link('campaign') . '?tab=tab04'); ?>">
+                                            体験ダイビング
+                                        </a>
+                                    </li>
                                 </ul>
                                 <ul class="menu__nav-item">
                                     <li class="menu__nav-item-main">
@@ -173,7 +179,6 @@ $site = esc_url( home_url( '/site/' ) );
                         </div>
                     </div>
                 </div>
-
             </nav>
         </div>
     </header>

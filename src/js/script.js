@@ -54,36 +54,36 @@ jQuery(function ($) { // この中であればWordpressでも「$」が使用可
       },
     });
 
-// キャンペーンセクション用のSwiper
-var campaignSwiper = new Swiper('.js-campaign-swiper', {
-  loop: true, // 無限ループ
-  slidesPerView: 'auto', // 一度に表示するスライド数
-  slidesPerGroup: 1, // 一度に移動するスライド数
-  initialSlide: 1, // 初期表示スライド
-  spaceBetween: 24, // スライド間のスペース
-  autoplay: {
-    delay: 2000, // 2秒ごとに自動でスライド
-    disableOnInteraction: false // ユーザーが操作しても自動再生を止めない
-  },
-  pagination: {
-    el: '.swiper-pagination', // ページネーションの要素
-    clickable: true, // ページネーションをクリック可能にする
-  },
-  navigation: {
-    nextEl: '.swiper-button-next', // 次へボタン
-    prevEl: '.swiper-button-prev', // 前へボタン
-  },
-  breakpoints: {
+  // キャンペーンセクション用のSwiper
+  var campaignSwiper = new Swiper('.js-campaign-swiper', {
+    loop: true, // 無限ループ
+    slidesPerView: 'auto', // 一度に表示するスライド数
+    slidesPerGroup: 1, // 一度に移動するスライド数
+    initialSlide: 1, // 初期表示スライド
+    spaceBetween: 24, // スライド間のスペース
+    autoplay: {
+      delay: 2000, // 2秒ごとに自動でスライド
+      disableOnInteraction: false // ユーザーが操作しても自動再生を止めない
+    },
+    pagination: {
+      el: '.swiper-pagination', // ページネーションの要素
+      clickable: true, // ページネーションをクリック可能にする
+    },
+    navigation: {
+      nextEl: '.swiper-button-next', // 次へボタン
+      prevEl: '.swiper-button-prev', // 前へボタン
+    },
+    breakpoints: {
 
-    // タブレットおよびPC用（768px以上）
-    768: {
-      slidesPerView: 'auto', // 一度に表示するスライド数
-      slidesPerGroup: 1, // 一度に移動するスライド数
-      initialSlide: 1, // 初期表示スライド
-      spaceBetween: 40, // スライド間のスペース
+      // タブレットおよびPC用（768px以上）
+      768: {
+        slidesPerView: 'auto', // 一度に表示するスライド数
+        slidesPerGroup: 1, // 一度に移動するスライド数
+        initialSlide: 1, // 初期表示スライド
+        spaceBetween: 40, // スライド間のスペース
+      }
     }
-  }
-});
+  });
 
 //要素の取得とスピードの設定
 var box = $('.colorbox'),
@@ -255,6 +255,48 @@ $("#grayDisplay").click(function () {
       }
     }
   });
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const tabs = document.querySelectorAll('.tab__button');
+    const tabContents = document.querySelectorAll('.tab__campaign-contents-content');
+
+    // クエリーパラメーターから現在のタブを取得
+    const urlParams = new URLSearchParams(window.location.search);
+    const activeTab = urlParams.get('tab') || 'tab01'; // デフォルトは tab01
+
+    // 初期表示: アクティブなタブを切り替え
+    tabs.forEach(tab => {
+        tab.classList.toggle('is-active', tab.getAttribute('data-number') === activeTab);
+    });
+
+    tabContents.forEach(content => {
+        content.classList.toggle('is-active', content.id === activeTab);
+    });
+
+
+// WordPressキャンペーンのタブ切り替え
+    // タブクリック時の切り替え処理
+    tabs.forEach(tab => {
+        tab.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            const targetTab = this.getAttribute('data-number');
+
+            // タブのアクティブ状態を更新
+            tabs.forEach(t => t.classList.remove('is-active'));
+            this.classList.add('is-active');
+
+            // コンテンツのアクティブ状態を更新
+            tabContents.forEach(content => {
+                content.classList.toggle('is-active', content.id === targetTab);
+            });
+
+            // URLクエリーパラメーターを更新
+            const newUrl = `${window.location.pathname}?tab=${targetTab}`;
+            history.pushState(null, '', newUrl);
+        });
+    });
+});
 
 
 
