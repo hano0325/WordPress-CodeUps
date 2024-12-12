@@ -99,102 +99,16 @@ add_action('wp_enqueue_scripts', 'my_script_init');
  * @param string $title 書き換え前のタイトル.
  * @return string $title 書き換え後のタイトル.
  */
-function custom_post() {
 
-	register_post_type(
-	  'campaign',
-	  array(
-		'public' => true,
-		'labels' => array(
-		'name' => 'カスタム投稿',
-		  'all_items' => 'カスタム投稿一覧',
-		  'add_new' => '新規ページ追加',
-		  'exclude_from_search' => false,
-		),
-		'show_in_rest' => true, // RESTAPIに含めるかどうか
-		'supports' => array('title', 'editor', 'thumbnail', 'revisions', 'excerpt', 'custom-fields', 'page-attributes'),
-		'has_archive' => true,
-		'menu_position' => 5,
-		'menu_icon' => 'dashicons-admin-customizer', 
-		'hierarchical' => true,
-	  )
-	);
-
-	register_taxonomy(
-		'all_category', // タクソノミーの名前
-		array('campaign'), // 使用するカスタム投稿タイプ名
-		array(
-		  'hierarchical' => true,
-		  'label' => 'カテゴリー',
-		  'show_ui' => true,
-		  'public' => true,
-		  'show_in_rest' => true // ブロックエディタの有効化。
-	  ));
-	  
-	  register_taxonomy(
-		  'license_category', // タクソノミーの名前
-		  array('campaign'), // 使用するカスタム投稿タイプ名
-		  array(
-			  'hierarchical' => true,
-			  'label' => 'カテゴリー',
-			  'show_ui' => true,
-			  'public' => true,
-			  'show_in_rest' => true // ブロックエディタの有効化。
-			));
-			
-			register_taxonomy(
-				'fun_category', // タクソノミーの名前
-				array('campaign'), // 使用するカスタム投稿タイプ名
-				array(
-					'hierarchical' => true,
-					'label' => 'カテゴリー',
-					'show_ui' => true,
-					'public' => true,
-					'show_in_rest' => true // ブロックエディタの有効化。
-				));
-				register_taxonomy(
-					'experience_category', // タクソノミーの名前
-					array('campaign'), // 使用するカスタム投稿タイプ名
-					array(
-					  'hierarchical' => true,
-					  'label' => 'カテゴリー',
-					  'show_ui' => true,
-					  'public' => true,
-					  'show_in_rest' => true // ブロックエディタの有効化。
-				  ));
-			};
-			add_action('init', 'custom_post');
-			// function my_archive_title( $title ) {
-				
-// 	if ( is_home() ) { /* ホームの場合 */
-// 		$title = 'ブログ';
-// 	} elseif ( is_category() ) { /* カテゴリーアーカイブの場合 */
-// 		$title = '' . single_cat_title( '', false ) . '';
-// 	} elseif ( is_tag() ) { /* タグアーカイブの場合 */
-// 		$title = '' . single_tag_title( '', false ) . '';
-// 	} elseif ( is_post_type_archive() ) { /* 投稿タイプのアーカイブの場合 */
-// 		$title = '' . post_type_archive_title( '', false ) . '';
-// 	} elseif ( is_tax() ) { /* タームアーカイブの場合 */
-// 		$title = '' . single_term_title( '', false );
-// 	} elseif ( is_search() ) { /* 検索結果アーカイブの場合 */
-// 		$title = '「' . esc_html( get_query_var( 's' ) ) . '」の検索結果';
-// 	} elseif ( is_author() ) { /* 作者アーカイブの場合 */
-// 		$title = '' . get_the_author() . '';
-// 	} elseif ( is_date() ) { /* 日付アーカイブの場合 */
-// 		$title = '';
-// 		if ( get_query_var( 'year' ) ) {
-// 			$title .= get_query_var( 'year' ) . '年';
-// 		}
-// 		if ( get_query_var( 'monthnum' ) ) {
-// 			$title .= get_query_var( 'monthnum' ) . '月';
-// 		}
-// 		if ( get_query_var( 'day' ) ) {
-// 			$title .= get_query_var( 'day' ) . '日';
-// 		}
-// 	}
-// 	return $title;
-// };
-// add_filter( 'get_the_archive_title', 'my_archive_title' );
+/**
+ * @param string $page_title ページのtitle属性値
+ * @param string $menu_title 管理画面のメニューに表示するタイトル
+ * @param string $capability メニューを操作できる権限（manage_options とか）
+ * @param string $menu_slug オプションページのスラッグ。ユニークな値にすること。
+ * @param string|null $icon_url メニューに表示するアイコンの URL
+ * @param int $position メニューの位置
+ */
+SCF::add_options_page( 'ページタイトル', 'タブボタン', 'manage_options', 'theme-options' );
 
 
 /**
@@ -231,7 +145,7 @@ function remove_wysiwyg() {
 function my_custom_query_vars( $query ) {
 	/* @var $query WP_Query */
 	if ( !is_admin() && $query->is_main_query()) {
-		if ( is_post_type_archive('works') ) {
+		if ( is_post_type_archive('campaign') ) {
 			$query->set( 'posts_per_page' , -1 );//表示したい数
 		}
 	}

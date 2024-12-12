@@ -4,7 +4,7 @@
         <div class="mv__slider swiper js-mv-swiper">
             <div class="mv__wrapper swiper-wrapper">
                 <?php
-                $mv_slides = SCF::get('mv_slides'); 
+                $mv_slides = SCF::get('mv_slides');
                 if (!empty($mv_slides)) :
                     foreach ($mv_slides as $slide) :
                         $image_pc = wp_get_attachment_image_url($slide['image_pc'], 'full');
