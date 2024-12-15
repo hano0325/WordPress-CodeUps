@@ -27,7 +27,6 @@
                         'taxonomy' => 'campaign_category',
                         'hide_empty' => true,
                     ));
-
                     // "ALL" タブを追加
                     ?>
                     <a class="tab__button is-active"
@@ -46,6 +45,13 @@
                 </div>
                 <div class="tab__campaign-contents">
                     <ul class="tab__campaign-contents-content is-active">
+                        <?php
+                            $args = [
+                                "post_type" => "campaign",
+                                "posts_per_page" => 4
+                            ];
+                            $the_query = new WP_Query($args);
+                            ?>
                         <?php if (have_posts()) : ?>
                         <?php while (have_posts()) : the_post(); ?>
                         <?php
@@ -94,11 +100,11 @@
                                                 <?php echo esc_html($campaign['data_text']); // 補足テキスト ?>
                                             </p>
                                             <div class="tab__campaign-form-button">
-                                                <a href="<?php echo $contact;?>" class="button">
+                                                <a href="<?php echo esc_url(home_url('contact')); ?>" class="button">
                                                     <div class="button__container">
                                                         <p>Contact us</p>
                                                         <img src="<?php echo get_template_directory_uri(); ?>/assets/images/common/Vector.png"
-                                                            alt="矢印" class="button__arrow" />
+                                                            alt="矢印" class="button__arrow">
                                                     </div>
                                                 </a>
                                             </div>
@@ -112,6 +118,11 @@
                         <?php endwhile; ?>
                         <?php endif; ?>
                     </ul>
+                </div>
+            </div>
+            <div class="campaign-lower__pagenavi pagenavi">
+                <div class="pagenavi__inner">
+                    <?php wp_pagenavi(); ?>
                 </div>
             </div>
         </div>

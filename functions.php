@@ -151,3 +151,15 @@ function my_custom_query_vars( $query ) {
 	}
 	return $query;
 }
+
+// campaignアーカイブページの投稿数を4件に設定
+function set_campaign_posts_per_page($query) {
+    // 管理画面ではなく、メインクエリが対象
+    if (!is_admin() && $query->is_main_query()) {
+        // カスタム投稿タイプ "campaign" のアーカイブページ
+        if ($query->is_post_type_archive('campaign')) {
+            $query->set('posts_per_page', 4); // 1ページあたり4件表示
+        }
+    }
+}
+add_action('pre_get_posts', 'set_campaign_posts_per_page');

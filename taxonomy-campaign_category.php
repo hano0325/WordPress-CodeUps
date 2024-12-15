@@ -2,7 +2,7 @@
 <div id="mv" class="mv-lower mv-lower--mask">
     <div class="mv-lower__inner">
         <div class="mv-lower__title">
-            <h1 class="mv-lower__title-main"><?php echo get_template_directory_title() ?></h1>
+            <h1 class="mv-lower__title-main">Campaign</h1>
         </div>
         <div class="mv-lower__img">
             <picture>
@@ -91,10 +91,10 @@
                                                 <?php echo esc_html($campaign['data_text']); // 補足テキスト ?>
                                             </p>
                                             <div class="tab__campaign-form-button">
-                                                <a href="<?php echo $contact;?>" class="button">
+                                                <a href="<?php echo esc_url(home_url('contact')); ?>" class="button">
                                                     <div class="button__container">
                                                         <p>Contact us</p>
-                                                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/common/Vector.png"
+                                                        <img src="<?php echo get_template_directory_uri() ?>/assets/images/common/Vector.png"
                                                             alt="矢印" class="button__arrow" />
                                                     </div>
                                                 </a>
@@ -110,6 +110,16 @@
                         <?php endif; ?>
                     </ul>
                 </div>
+            </div>
+            <div class="campaign-lower__pagenavi pagenavi">
+                <?php
+                    if (function_exists('wp_pagenavi')) {
+                        wp_pagenavi(array(
+                            'always_show' => true
+                        ));
+                    }
+                    ?>
+                <?php wp_pagenavi(); ?>
             </div>
         </div>
     </section>

@@ -1,3 +1,17 @@
+<?php
+$home = esc_url( home_url( '/' ) );
+$campaign = esc_url( home_url( '/campaign/' ) );
+$about = esc_url( home_url( '/about/' ) );
+$information = esc_url( home_url( '/information/' ) );
+$blog = esc_url( home_url( '/blog/' ) );
+$voice = esc_url( home_url( '/voice/' ) );
+$price = esc_url( home_url( '/price/' ) );
+$faq = esc_url( home_url( '/faq/' ) );
+$contact = esc_url( home_url( '/contact/' ) );
+$privacy = esc_url( home_url( '/privacy/' ) );
+$terms = esc_url( home_url( '/terms/' ) );
+$site = esc_url( home_url( '/site/' ) );
+?>
 <?php get_header(); ?>
 <div id="mv" class="mv">
     <div class="mv__inner">
@@ -453,7 +467,7 @@
                 </ul>
             </div>
             <div class="price__button">
-                <a href="<?php echo esc_url($contact); ?>" class="button">
+                <a href="<?php echo $price; ?>" class="button">
                     <div class="button__container">
                         <p>View more</p>
                         <img src="<?php echo get_template_directory_uri() ?>/assets/images/common/Vector.png" alt="矢印"

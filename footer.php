@@ -11,7 +11,7 @@ $contact = esc_url( home_url( '/contact/' ) );
 $privacy = esc_url( home_url( '/privacy/' ) );
 $terms = esc_url( home_url( '/terms/' ) );
 $site = esc_url( home_url( '/site/' ) );
-?>l
+?>
 
 <?php if (!is_page(array('contact', 'thanks', 'error'))): ?>
 <section class="contact contact-layout">
@@ -50,7 +50,7 @@ $site = esc_url( home_url( '/site/' ) );
                     <div class="contact__form-container">
                         <p class="contact__form-text">ご予約・お問い合わせはコチラ</p>
                         <div class="contact__form-button">
-                            <a href="contact.html" class="button">
+                            <a href="<?php echo $contact; ?>" class="button">
                                 <div class="button__container">
                                     <p>Contact us</p>
                                     <img src="<?php echo get_template_directory_uri() ?>/assets/images/common/Vector.png"
@@ -99,49 +99,45 @@ $site = esc_url( home_url( '/site/' ) );
                     <div class="menu__nav-content">
                         <ul class="menu__nav-item">
                             <li class="menu__nav-item-main">
-                                <a href="<?php echo esc_url(get_post_type_archive_link('campaign')); ?>">キャンペーン</a>
+                                <a href="<?php echo esc_url(home_url('campaign')); ?>">キャンペーン</a>
                             </li>
+                            <?php
+                                $terms = get_terms('campaign_category');
+                                foreach ($terms as $term):
+                                    ?>
                             <li class="menu__nav-item-sub">
-                                <a href="<?php echo esc_url(get_post_type_archive_link('campaign') . '?tab=tab02'); ?>">
-                                    ライセンス講習
+                                <a href="<?php echo esc_url(get_term_link($term)); ?>">
+                                    <?php echo esc_html($term->name); // タームの名前を表示 ?>
                                 </a>
                             </li>
-                            <li class="menu__nav-item-sub">
-                                <a href="<?php echo esc_url(get_post_type_archive_link('campaign') . '?tab=tab03'); ?>">
-                                    ファンダイビング
-                                </a>
-                            </li>
-                            <li class="menu__nav-item-sub">
-                                <a href="<?php echo esc_url(get_post_type_archive_link('campaign') . '?tab=tab04'); ?>">
-                                    体験ダイビング
-                                </a>
-                            </li>
+                            <?php
+                                endforeach;
+                                ?>
                         </ul>
-
                         <ul class="menu__nav-item">
                             <li class="menu__nav-item-main">
-                                <a href="<?php echo esc_url($about); ?>">私たちについて</a>
+                                <a href="<?php echo $about; ?>">私たちについて</a>
                             </li>
                         </ul>
                     </div>
                     <div class="menu__nav-content">
                         <ul class="menu__nav-item">
                             <li class="menu__nav-item-main">
-                                <a href="<?php echo esc_url($information); ?>">ダイビング情報</a>
+                                <a href="<?php echo $information; ?>">ダイビング情報</a>
                             </li>
                             <li class="menu__nav-item-sub">
-                                <a href="<?php echo esc_url($home); ?>?tab=tab01">ライセンス講習</a>
+                                <a href="<?php echo $home; ?>?tab=tab01">ライセンス講習</a>
                             </li>
                             <li class="menu__nav-item-sub">
-                                <a href="<?php echo esc_url($home); ?>?tab=tab03">体験ダイビング</a>
+                                <a href="<?php echo $home; ?>?tab=tab03">体験ダイビング</a>
                             </li>
                             <li class="menu__nav-item-sub">
-                                <a href="<?php echo esc_url($home); ?>?tab=tab02">ファンダイビング</a>
+                                <a href="<?php echo $home; ?>?tab=tab02">ファンダイビング</a>
                             </li>
                         </ul>
                         <ul class="menu__nav-item">
                             <li class="menu__nav-item-main">
-                                <a href="<?php echo esc_url($blog); ?>">ブログ</a>
+                                <a href="<?php echo $blog; ?>">ブログ</a>
                             </li>
                         </ul>
                     </div>
@@ -150,48 +146,48 @@ $site = esc_url( home_url( '/site/' ) );
                     <div class="menu__nav-content">
                         <ul class="menu__nav-item">
                             <li class="menu__nav-item-main">
-                                <a href="<?php echo esc_url($voice); ?>">お客様の声</a>
+                                <a href="<?php echo $voice; ?>">お客様の声</a>
                             </li>
                         </ul>
                         <ul class="menu__nav-item">
                             <li class="menu__nav-item-main">
-                                <a href="<?php echo esc_url($price); ?>">料金一覧</a>
+                                <a href="<?php echo $price; ?>">料金一覧</a>
                             </li>
                             <li class="menu__nav-item-sub">
-                                <a href="<?php echo esc_url($price); ?>#license">ライセンス講習</a>
+                                <a href="<?php echo $price; ?>#license">ライセンス講習</a>
                             </li>
                             <li class="menu__nav-item-sub">
-                                <a href="<?php echo esc_url($price); ?>#experience">体験ダイビング</a>
+                                <a href="<?php echo $price; ?>#experience">体験ダイビング</a>
                             </li>
                             <li class="menu__nav-item-sub">
-                                <a href="<?php echo esc_url($price); ?>#fun">ファンダイビング</a>
+                                <a href="<?php echo $price; ?>#fun">ファンダイビング</a>
                             </li>
                         </ul>
                     </div>
                     <div class="menu__nav-content">
                         <ul class="menu__nav-item">
                             <li class="menu__nav-item-main">
-                                <a href="<?php echo esc_url($faq); ?>">よくある質問</a>
+                                <a href="<?php echo $faq; ?>">よくある質問</a>
                             </li>
                         </ul>
                         <ul class="menu__nav-item">
                             <li class="menu__nav-item-main">
-                                <a href="<?php echo esc_url($privacy); ?>">プライバシー<br class="u-mobile" />ポリシー</a>
+                                <a href="<?php echo $privacy; ?>">プライバシー<br class="u-mobile" />ポリシー</a>
                             </li>
                         </ul>
                         <ul class="menu__nav-item">
                             <li class="menu__nav-item-main">
-                                <a href="<?php echo esc_url($terms); ?>">利用規約</a>
+                                <a href="<?php echo $terms; ?>">利用規約</a>
                             </li>
                         </ul>
                         <ul class="menu__nav-item">
                             <li class="menu__nav-item-main">
-                                <a href="<?php echo esc_url($site); ?>">サイトマップ</a>
+                                <a href="<?php echo $site; ?>">サイトマップ</a>
                             </li>
                         </ul>
                         <ul class="menu__nav-item">
                             <li class="menu__nav-item-main">
-                                <a href="<?php echo esc_url($contact); ?>">お問い合わせ</a>
+                                <a href="<?php echo $contact; ?>">お問い合わせ</a>
                             </li>
                         </ul>
                     </div>
