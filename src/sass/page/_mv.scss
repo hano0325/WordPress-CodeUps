@@ -76,10 +76,10 @@
 
 .mv-lower {
   position: relative;
-  height: rem(460);
+  height: rem(412);
   min-height: rem(400);
   @include mq("md") {
-    height: rem(548);
+    height: rem(516);
   }
 }
 

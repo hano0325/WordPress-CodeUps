@@ -112,14 +112,9 @@
                 </div>
             </div>
             <div class="campaign-lower__pagenavi pagenavi">
-                <?php
-                    if (function_exists('wp_pagenavi')) {
-                        wp_pagenavi(array(
-                            'always_show' => true
-                        ));
-                    }
-                    ?>
-                <?php wp_pagenavi(); ?>
+                <div class="pagenavi__inner">
+                    <?php wp_pagenavi(); ?>
+                </div>
             </div>
         </div>
     </section>

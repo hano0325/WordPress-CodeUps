@@ -121,9 +121,7 @@
                 </div>
             </div>
             <div class="campaign-lower__pagenavi pagenavi">
-                <div class="pagenavi__inner">
-                    <?php wp_pagenavi(); ?>
-                </div>
+                <?php wp_pagenavi(); ?>
             </div>
         </div>
     </section>

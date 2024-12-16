@@ -162,4 +162,5 @@ function set_campaign_posts_per_page($query) {
         }
     }
 }
+// pre_get_posts フックを追加
 add_action('pre_get_posts', 'set_campaign_posts_per_page');
