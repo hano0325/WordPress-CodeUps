@@ -105,11 +105,6 @@ $site = esc_url( home_url( '/site/' ) );
                                 </ul>
                                 <ul class="menu__nav-item">
                                     <li class="menu__nav-item-main">
-                                        <a href="<?php echo $about; ?>">私たちについて</a>
-                                    </li>
-                                </ul>
-                                <ul class="menu__nav-item">
-                                    <li class="menu__nav-item-main">
                                         <a href="<?php echo $information; ?>">ダイビング情報</a>
                                     </li>
                                     <li class="menu__nav-item-sub">
