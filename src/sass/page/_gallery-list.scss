@@ -13,6 +13,8 @@
 }
 
 .gallery-list__item {
+    width: 100%;
+    height: auto;
     @include mq(md) {
         grid-column: span 5;
         grid-row: span 1;
@@ -29,7 +31,7 @@
 
 .gallery-list__item img {
     width: 100%;
-    height: 100%;
+    height: auto;
     aspect-ratio: 345/219;
     object-fit: cover;
     @include mq("md") {

@@ -270,3 +270,43 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 });
+document.addEventListener('DOMContentLoaded', function () {
+  var tabs = document.querySelectorAll('.tab__button');
+  var tabContents = document.querySelectorAll('.tab__campaign-contents-content');
+
+  // クエリーパラメーターから現在のタブを取得
+  var urlParams = new URLSearchParams(window.location.search);
+  var activeTab = urlParams.get('tab') || 'tab01'; // デフォルトは tab01
+
+  // 初期表示: アクティブなタブを切り替え
+  tabs.forEach(function (tab) {
+    tab.classList.toggle('is-active', tab.getAttribute('data-number') === activeTab);
+  });
+  tabContents.forEach(function (content) {
+    content.classList.toggle('is-active', content.id === activeTab);
+  });
+
+  // WordPressキャンペーンのタブ切り替え
+  // タブクリック時の切り替え処理
+  tabs.forEach(function (tab) {
+    tab.addEventListener('click', function (e) {
+      e.preventDefault();
+      var targetTab = this.getAttribute('data-number');
+
+      // タブのアクティブ状態を更新
+      tabs.forEach(function (t) {
+        return t.classList.remove('is-active');
+      });
+      this.classList.add('is-active');
+
+      // コンテンツのアクティブ状態を更新
+      tabContents.forEach(function (content) {
+        content.classList.toggle('is-active', content.id === targetTab);
+      });
+
+      // URLクエリーパラメーターを更新
+      var newUrl = "".concat(window.location.pathname, "?tab=").concat(targetTab);
+      history.pushState(null, '', newUrl);
+    });
+  });
+});
