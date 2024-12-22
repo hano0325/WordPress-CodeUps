@@ -164,3 +164,44 @@ function set_campaign_posts_per_page($query) {
 }
 // pre_get_posts フックを追加
 add_action('pre_get_posts', 'set_campaign_posts_per_page');
+
+// "blog" カスタム投稿タイプの投稿数を10件に設定
+function set_blog_posts_per_page($query) {
+    // 管理画面ではなく、メインクエリが対象
+    if (!is_admin() && $query->is_main_query()) {
+        // カスタム投稿タイプ "blog" のアーカイブページ
+        if ($query->is_post_type_archive('blog')) {
+            $query->set('posts_per_page', 10); // 1ページあたり10件表示
+        }
+    }
+}
+// pre_get_posts フックを追加
+add_action('pre_get_posts', 'set_blog_posts_per_page');
+
+
+/* ---------- 「投稿」の表記変更 ---------- */
+function Change_menulabel() {
+	global $menu;
+	global $submenu;
+	$name = 'ブログ';
+	$menu[5][0] = $name;
+	$submenu['edit.php'][5][0] = $name.'一覧';
+	$submenu['edit.php'][10][0] = '新規'.$name.'投稿';
+  }
+  function Change_objectlabel() {
+	global $wp_post_types;
+	$name = 'ブログ';
+	$labels = &$wp_post_types['post']->labels;
+	$labels->name = $name;
+	$labels->singular_name = $name;
+	$labels->add_new = _x('追加', $name);
+	$labels->add_new_item = $name.'の新規追加';
+	$labels->edit_item = $name.'の編集';
+	$labels->new_item = '新規'.$name;
+	$labels->view_item = $name.'を表示';
+	$labels->search_items = $name.'を検索';
+	$labels->not_found = $name.'が見つかりませんでした';
+	$labels->not_found_in_trash = 'ゴミ箱に'.$name.'は見つかりませんでした';
+  }
+  add_action( 'init', 'Change_objectlabel' );
+  add_action( 'admin_menu', 'Change_menulabel' );

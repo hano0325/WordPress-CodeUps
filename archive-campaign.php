@@ -22,29 +22,34 @@
                 <!-- タブボタン -->
                 <div class="tab__list">
                     <?php
-                    // タクソノミー「campaign_category」のタームを取得
-                    $terms = get_terms(array(
-                        'taxonomy' => 'campaign_category',
-                        'hide_empty' => true,
-                    ));
-                    // "ALL" タブを追加
-                    ?>
-                    <a class="tab__button is-active"
-                        href="<?php echo esc_url(get_post_type_archive_link('campaign')); ?>">
+                        $is_archive_page = is_post_type_archive('campaign');
+                        $terms = get_terms(array(
+                            'taxonomy' => 'campaign_category',
+                            'hide_empty' => true,
+                        ));
+                        ?>
+                    <!-- "ALL" タブボタン -->
+                    <a class="tab__button <?php echo $is_archive_page ? 'is-active' : ''; ?>"
+                        href="<?php echo esc_url(get_post_type_archive_link('campaign')); ?>" data-tab="all">
                         ALL
                     </a>
                     <?php
                     // 各タームごとにタブを生成
                     if (!empty($terms)) :
-                        foreach ($terms as $term) : ?>
-                    <a class="tab__button" href="<?php echo esc_url(get_term_link($term)); ?>">
+                        foreach ($terms as $term) :
+                            // 現在のタームページと一致しているかチェック
+                            $is_active_term = is_tax('campaign_category', $term->slug);
+                            ?>
+                    <a class="tab__button <?php echo $is_active_term ? 'is-active' : ''; ?>"
+                        href="<?php echo esc_url(get_term_link($term)); ?>"
+                        data-tab="<?php echo esc_html($term->slug); ?>">
                         <?php echo esc_html($term->name); ?>
                     </a>
                     <?php endforeach;
-                    endif; ?>
+                endif; ?>
                 </div>
                 <div class="tab__campaign-contents">
-                    <ul class="tab__campaign-contents-content is-active">
+                    <ul class="tab__campaign-contents-content">
                         <?php
                             $args = [
                                 "post_type" => "campaign",

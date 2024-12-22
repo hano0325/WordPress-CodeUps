@@ -9,7 +9,7 @@ $price = esc_url( home_url( '/price/' ) );
 $faq = esc_url( home_url( '/faq/' ) );
 $contact = esc_url( home_url( '/contact/' ) );
 $privacy = esc_url( home_url( '/privacy/' ) );
-$terms = esc_url( home_url( '/terms/' ) );
+$service = esc_url( home_url( '/service/' ) );
 $site = esc_url( home_url( '/site/' ) );
 ?>
 
@@ -126,13 +126,13 @@ $site = esc_url( home_url( '/site/' ) );
                                 <a href="<?php echo $information; ?>">ダイビング情報</a>
                             </li>
                             <li class="menu__nav-item-sub">
-                                <a href="<?php echo $home; ?>?tab=tab01">ライセンス講習</a>
+                                <a href="<?php echo $information; ?>?tab=tab01">ライセンス講習</a>
                             </li>
                             <li class="menu__nav-item-sub">
-                                <a href="<?php echo $home; ?>?tab=tab03">体験ダイビング</a>
+                                <a href="<?php echo $information; ?>?tab=tab03">体験ダイビング</a>
                             </li>
                             <li class="menu__nav-item-sub">
-                                <a href="<?php echo $home; ?>?tab=tab02">ファンダイビング</a>
+                                <a href="<?php echo $information; ?>?tab=tab02">ファンダイビング</a>
                             </li>
                         </ul>
                         <ul class="menu__nav-item">
@@ -177,7 +177,7 @@ $site = esc_url( home_url( '/site/' ) );
                         </ul>
                         <ul class="menu__nav-item">
                             <li class="menu__nav-item-main">
-                                <a href="<?php echo $terms; ?>">利用規約</a>
+                                <a href="<?php echo $service; ?>">利用規約</a>
                             </li>
                         </ul>
                         <ul class="menu__nav-item">

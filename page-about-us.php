@@ -15,11 +15,7 @@
     </div>
 </div>
 <div class="breadcrumb breadcrumb-layout">
-    <div class="breadcrumb__inner">
-        <div class="breadcrumb__container">
-            <?php get_template_part('breadcrumb'); ?>
-        </div>
-    </div>
+    <?php get_template_part('breadcrumb'); ?>
 </div>
 <main>
     <section class="dive-lower dive-lower-layout">
@@ -52,12 +48,12 @@
                 <p class="title__main">Gallery</p>
                 <h2 class="title__sub">フォト</h2>
             </div>
-            <?php
-                // SCFで設定した繰り返しフィールドを取得
-                $gallery_images = SCF::get('gallery_images');
-                ?>
-            <?php if (!empty($gallery_images)) : ?>
             <ul class="gallery__list gallery-list">
+                <?php
+                    // SCFで設定した繰り返しフィールドを取得
+                    $gallery_images = SCF::get('gallery_images');
+                    ?>
+                <?php if (!empty($gallery_images)) : ?>
                 <?php foreach ($gallery_images as $gallery) : ?>
                 <?php
                     // PC画像のURL

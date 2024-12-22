@@ -19,7 +19,7 @@ $price = esc_url( home_url( '/price/' ) );
 $faq = esc_url( home_url( '/faq/' ) );
 $contact = esc_url( home_url( '/contact/' ) );
 $privacy = esc_url( home_url( '/privacy/' ) );
-$terms = esc_url( home_url( '/terms/' ) );
+$service = esc_url( home_url( '/service/' ) );
 $site = esc_url( home_url( '/site/' ) );
 ?>
 
@@ -155,7 +155,7 @@ $site = esc_url( home_url( '/site/' ) );
                                 </ul>
                                 <ul class="menu__nav-item">
                                     <li class="menu__nav-item-main">
-                                        <a href="<?php echo $terms; ?>">利用規約</a>
+                                        <a href="<?php echo $service; ?>">利用規約</a>
                                     </li>
                                 </ul>
                                 <ul class="menu__nav-item">
