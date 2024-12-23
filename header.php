@@ -51,7 +51,7 @@ $site = esc_url( home_url( '/site/' ) );
                     <a href="<?php echo $blog;?>" class="header__nav-link"><span>blog</span>ブログ</a>
                 </li>
                 <li class="header__nav-item">
-                    <a href="<?php echo $voice?>" class="header__nav-link"><span>voice</span>お客様の声</a>
+                    <a href="<?php echo $voice;?>" class="header__nav-link"><span>voice</span>お客様の声</a>
                 </li>
                 <li class="header__nav-item">
                     <a href="<?php echo $price;?>" class="header__nav-link"><span>price</span>料金一覧</a>

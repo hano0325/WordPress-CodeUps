@@ -165,19 +165,24 @@ function set_campaign_posts_per_page($query) {
 // pre_get_posts フックを追加
 add_action('pre_get_posts', 'set_campaign_posts_per_page');
 
-// "blog" カスタム投稿タイプの投稿数を10件に設定
-function set_blog_posts_per_page($query) {
-    // 管理画面ではなく、メインクエリが対象
-    if (!is_admin() && $query->is_main_query()) {
-        // カスタム投稿タイプ "blog" のアーカイブページ
-        if ($query->is_post_type_archive('blog')) {
-            $query->set('posts_per_page', 10); // 1ページあたり10件表示
-        }
+
+
+function custom_pagination($query) {
+    if (!is_admin() && $query->is_main_query() && is_home()) {
+        $query->set('posts_per_page', 10); // 1ページあたりの投稿数を設定
     }
 }
-// pre_get_posts フックを追加
-add_action('pre_get_posts', 'set_blog_posts_per_page');
+add_action('pre_get_posts', 'custom_pagination');
 
+
+
+// 例）個別ページに付与される「blog」を削除
+add_filter( 'body_class', function( $classes ){
+  if ( in_array( 'blog', $classes, true ) ) {
+    unset( $classes[ array_search( 'single', $classes ) ] );
+  }
+  return $classes;
+} );
 
 /* ---------- 「投稿」の表記変更 ---------- */
 function Change_menulabel() {
@@ -190,7 +195,7 @@ function Change_menulabel() {
   }
   function Change_objectlabel() {
 	global $wp_post_types;
-	$name = 'ブログ';
+	$name = 'ブログ投稿';
 	$labels = &$wp_post_types['post']->labels;
 	$labels->name = $name;
 	$labels->singular_name = $name;
@@ -205,3 +210,13 @@ function Change_menulabel() {
   }
   add_action( 'init', 'Change_objectlabel' );
   add_action( 'admin_menu', 'Change_menulabel' );
+
+
+//ウィジェット
+function theme_slug_widgets_init() {
+	register_sidebar( array(
+		'name' => 'サイドバー', //ウィジェットの名前を入力
+		'id' => 'sidebar', //ウィジェットに付けるid名を入力
+	) );
+  }
+  add_action( 'widgets_init', 'theme_slug_widgets_init' );
