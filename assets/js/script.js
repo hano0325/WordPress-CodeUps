@@ -148,28 +148,28 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 document.addEventListener('DOMContentLoaded', function () {
-  // タブのボタンとコンテンツをそれぞれ取得
-  var tabButtons = document.querySelectorAll('.js-tab-button');
-  var tabContents = document.querySelectorAll('.js-tab-content');
-  tabButtons.forEach(function (button) {
+  var yearButtons = document.querySelectorAll('.archive-list__year');
+  var archiveMonths = document.querySelectorAll('.archive-list__months');
+  var cards = document.querySelectorAll('.cards__card');
+
+  // ページ読み込み時の初期設定
+  archiveMonths.forEach(function (monthsList) {
+    var parentYearButton = monthsList.previousElementSibling;
+    if (!parentYearButton.classList.contains('is-active')) {
+      monthsList.style.display = 'none';
+    }
+  });
+
+  // 年ボタンをクリックしたときの処理
+  yearButtons.forEach(function (button) {
     button.addEventListener('click', function () {
-      // ボタンのdata-number属性を取得
-      var targetTab = button.getAttribute('data-number');
+      var isExpanded = button.getAttribute('aria-expanded') === 'true';
+      var monthsList = button.nextElementSibling;
 
-      // すべてのボタンから「is-active」クラスを削除し、クリックされたボタンに付与
-      tabButtons.forEach(function (btn) {
-        return btn.classList.remove('is-active');
-      });
-      button.classList.add('is-active');
-
-      // すべてのタブコンテンツを非表示にし、対応するコンテンツだけを表示
-      tabContents.forEach(function (content) {
-        if (content.getAttribute('id') === targetTab) {
-          content.classList.add('is-active');
-        } else {
-          content.classList.remove('is-active');
-        }
-      });
+      // トグル動作
+      button.setAttribute('aria-expanded', !isExpanded);
+      button.classList.toggle('is-active');
+      monthsList.style.display = isExpanded ? 'none' : 'block';
     });
   });
 });
@@ -199,37 +199,14 @@ $("#grayDisplay").click(function () {
 
   return false;
 });
-
-// アーカイブのトグル
-document.querySelectorAll('.archive-list__year').forEach(function (toggleButton) {
-  toggleButton.addEventListener('click', function () {
-    var monthsList = toggleButton.nextElementSibling;
-    var isExpanded = toggleButton.getAttribute('aria-expanded') === 'true';
-    toggleButton.setAttribute('aria-expanded', !isExpanded);
-    monthsList.hidden = isExpanded;
-    toggleButton.classList.toggle('is-active');
-  });
-});
-$(document).ready(function () {
-  // 初期状態で最初の質問を開く
-  $('.js-faq-question').addClass().next().show();
-
-  // クリックイベントでトグル
-  $('.js-faq-question').on('click', function () {
-    $(this).next().slideToggle();
-    $(this).toggleClass('is-active');
-  });
-});
 document.addEventListener("DOMContentLoaded", function () {
   // 最初のチェックボックスに自動でチェックを入れる
   var firstCheckbox = document.querySelector(".form__checkbox input[type='checkbox']");
   if (firstCheckbox) {
     firstCheckbox.checked = true;
   }
-
   // すべてのチェックボックスを取得
   var checkboxes = document.querySelectorAll('.form__checkbox input[type="checkbox"]');
-
   // 各チェックボックスにイベントリスナーを追加
   checkboxes.forEach(function (checkbox) {
     checkbox.addEventListener('change', function () {
@@ -241,34 +218,6 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     });
   });
-});
-document.addEventListener("DOMContentLoaded", function () {
-  // URLのクエリパラメータから"tab"の値を取得
-  var urlParams = new URLSearchParams(window.location.search);
-  var tabParam = urlParams.get("tab");
-
-  // タブボタンとコンテンツを取得
-  var tabButtons = document.querySelectorAll(".js-tab-button");
-  var tabContents = document.querySelectorAll(".js-tab-content");
-
-  // クエリパラメータに対応するタブを表示
-  if (tabParam) {
-    // すべてのタブボタンとコンテンツから"アクティブ"クラスを除去
-    tabButtons.forEach(function (button) {
-      return button.classList.remove("is-active");
-    });
-    tabContents.forEach(function (content) {
-      return content.classList.remove("is-active");
-    });
-
-    // 対応するタブボタンとコンテンツに"アクティブ"クラスを追加
-    var activeButton = document.querySelector(".js-tab-button[data-number=\"".concat(tabParam, "\"]"));
-    var activeContent = document.getElementById(tabParam);
-    if (activeButton && activeContent) {
-      activeButton.classList.add("is-active");
-      activeContent.classList.add("is-active");
-    }
-  }
 });
 document.addEventListener('DOMContentLoaded', function () {
   var tabs = document.querySelectorAll('.tab__button');

@@ -49,6 +49,7 @@
                         <?php endwhile; ?>
                         <?php endif; ?>
                     </ul>
+
                     <div class="blog-lower__pagenavi pagenavi">
                         <?php wp_pagenavi(); ?>
                     </div>
@@ -68,42 +69,20 @@
                                 <h2 class="title-side__main">人気記事</h2>
                             </div>
                         </div>
-                        <?php if( !is_user_logged_in() && !is_bot() ) { setPostViews( get_the_ID() ); } ?>
-                        <?php
-                            $popular_args = array(
-                            'post_type' => 'post', // 投稿タイプを指定
-                            'meta_key' => 'post_views_count', // 閲覧数を指定
-                            'orderby' => 'meta_value_num', // ソートの基準を閲覧数に
-                            'order' => 'DESC', // 降順（閲覧数が多い順）でソート
-                            'post_status' => 'publish', // 投稿ステータスは公開済み
-                            'posts_per_page' => 3, // 投稿表示件数は3件
-                            );
-                            $popular_query = new WP_Query( $popular_args );
-                            if( $popular_query->have_posts() ):
-                            ?>
                         <ul class="blog-lower-slideber__article-cards cards-article">
                             <li class="cards-article__card card-article">
-                                <a href="<?php echo the_permalink(); ?>" class="card-article__container">
+                                <a class="card-article__container">
                                     <div class="card-article__img">
-                                        <?php if (has_post_thumbnail()) : ?>
-                                        <img src="<?php echo esc_url(get_the_post_thumbnail_url('post-thumbnail')); ?>"
-                                            alt="デフォルト画像">
-                                        <?php else: ?>
-                                        <img src="<?php echo get_template_directory_uri() ?>/assets/images/common/ocean.jpg"
-                                            alt="デフォルト画像">
-                                        <?php endif; ?>
+                                        <img src="<?php echo get_template_directory_uri() ?>/assets/images/common/gallery4-sp.jpg"
+                                            alt="黄色い魚が水中を泳いでいる様子" />
                                     </div>
                                     <div class="card-article__text-box">
-                                        <time datetime="<?php echo get_the_date('Y-m-d'); ?>"
-                                            class="card-article__date"><?php the_time("Y/m/d"); ?></time>
-                                        <p class="card-article__title"><?php the_title(); ?></p>
+                                        <time datetime="2023-11-17" class="card-article__date">2023.11/17</time>
+                                        <p class="card-article__title">ライセンス取得</p>
                                     </div>
                                 </a>
                             </li>
                         </ul>
-                        <?php else: ?>
-                        <p class="popular__nodata">現在、人気記事はありません</p>
-                        <?php endif; ?>
                         <div class="blog-lower-reviews blog-lower-reviews-layout">
                             <div class="blog-lower-reviews__title title-side">
                                 <div class="title-side__container">
@@ -193,38 +172,36 @@
                                     foreach ($campaign_archives as $campaign):
                                     ?>
                                     <li class="blog-lower-campaign__content-card">
-                                        <a href=" <?php echo the_permalink(); ?>">
-                                            <div class=" blog-lower-campaign__container">
-                                                <div class="blog-lower-campaign__img">
-                                                    <?php if (has_post_thumbnail()): ?>
-                                                    <?php the_post_thumbnail('full'); ?>
-                                                    <?php else: ?>
-                                                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/common/cats.jpg"
-                                                        alt="デフォルト画像" />
-                                                    <?php endif; ?>
+                                        <div class="blog-lower-campaign__container">
+                                            <div class="blog-lower-campaign__img">
+                                                <?php if (has_post_thumbnail()): ?>
+                                                <?php the_post_thumbnail('full'); ?>
+                                                <?php else: ?>
+                                                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/common/cats.jpg"
+                                                    alt="デフォルト画像" />
+                                                <?php endif; ?>
+                                            </div>
+                                            <div class="blog-lower-campaign__container-text">
+                                                <div class="blog-lower-campaign__text-box">
+                                                    <p class="blog-lower-campaign__text-box-title">
+                                                        <?php echo esc_html($campaign['sub_title']); ?>
+                                                    </p>
                                                 </div>
-                                                <div class="blog-lower-campaign__container-text">
-                                                    <div class="blog-lower-campaign__text-box">
-                                                        <p class="blog-lower-campaign__text-box-title">
-                                                            <?php echo esc_html($campaign['sub_title']); ?>
+                                                <div class="blog-lower-campaign__money">
+                                                    <p class="blog-lower-campaign__money-title">
+                                                        <?php echo esc_html($campaign['money_title']); ?>
+                                                    </p>
+                                                    <div class="blog-lower-campaign__fee">
+                                                        <p class="blog-lower-campaign__discount">
+                                                            ¥<?php echo esc_html($campaign['discount_price']); ?>
                                                         </p>
-                                                    </div>
-                                                    <div class="blog-lower-campaign__money">
-                                                        <p class="blog-lower-campaign__money-title">
-                                                            <?php echo esc_html($campaign['money_title']); ?>
+                                                        <p class="blog-lower-campaign__main">
+                                                            ¥<?php echo esc_html($campaign['main_price']); ?>
                                                         </p>
-                                                        <div class="blog-lower-campaign__fee">
-                                                            <p class="blog-lower-campaign__discount">
-                                                                ¥<?php echo esc_html($campaign['discount_price']); ?>
-                                                            </p>
-                                                            <p class="blog-lower-campaign__main">
-                                                                ¥<?php echo esc_html($campaign['main_price']); ?>
-                                                            </p>
-                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </a>
+                                        </div>
                                     </li>
                                     <?php
                                         endforeach;
@@ -261,33 +238,39 @@
                             <div class="blog-lower-archive__container archive">
                                 <ul class="archive-list">
                                     <?php
-                                        // 投稿データから年と月を取得
-                                        global $wpdb;
-                                        $archives = $wpdb->get_results(" SELECT DISTINCT YEAR(post_date) AS year, MONTH(post_date) AS month FROM $wpdb->posts WHERE post_status = 'publish' AND post_type = 'post' ORDER BY post_date DESC");
-                                        // 年ごとにアーカイブを作成
-                                        $current_year = date('Y');
-                                        $years = [];
-                                        foreach ($archives as $archive) {
-                                            $years[$archive->year][] = $archive->month;
-                                        }
-                                        foreach ($years as $year => $months) {
-                                            $is_active = ($year == $current_year) ? 'is-active' : '';
-                                            $aria_expanded = ($year == $current_year) ? 'true' : 'false';
-                                            $style = ($year == $current_year) ? '' : 'style="display: none;"';
-                                            echo '<li class="archive-list__item">';
-                                            echo '<button class="archive-list__year ' . esc_attr($is_active) . '" aria-expanded="' . esc_attr($aria_expanded) . '">' . esc_html($year) . '</button>';
-                                            echo '<ul class="archive-list__months" ' . $style . '>';
-                                            foreach ($months as $month) {
-                                                $month_name = date_i18n('F', mktime(0, 0, 0, $month, 1));
-                                                $month_link = get_month_link($year, $month);
-                                                echo '<li class="archive-list__month">';
-                                                echo '<a href="' . esc_url($month_link) . '">' . esc_html($month_name) . '</a>';
-                                                echo '</li>';
-                                            }
-                                            echo '</ul>';
+                                    // 投稿データから年と月を取得
+                                    global $wpdb;
+                                    $archives = $wpdb->get_results("
+                                        SELECT DISTINCT YEAR(post_date) AS year, MONTH(post_date) AS month
+                                        FROM $wpdb->posts
+                                        WHERE post_status = 'publish' AND post_type = 'post'
+                                        ORDER BY post_date DESC
+                                    ");
+                                    // 年ごとにアーカイブを作成
+                                    $current_year = date('Y'); // 現在の年
+                                    $years = [];
+                                    foreach ($archives as $archive) {
+                                        $years[$archive->year][] = $archive->month; // 年ごとに月をグループ化
+                                    }
+                                    foreach ($years as $year => $months) {
+                                        $is_active = ($year == $current_year) ? 'is-active' : '';
+                                        $aria_expanded = ($year == $current_year) ? 'true' : 'false';
+                                        $style = ($year == $current_year) ? '' : 'style="display: none;"';
+                                        echo '<li class="archive-list__item">';
+                                        echo '<button class="archive-list__year ' . esc_attr($is_active) . '" aria-expanded="' . esc_attr($aria_expanded) . '">' . esc_html($year) . '</button>';
+                                        echo '<ul class="archive-list__months" ' . $style . '>';
+                                        // 月リストを作成
+                                        foreach ($months as $month) {
+                                            $month_name = date_i18n('F', mktime(0, 0, 0, $month, 1));
+                                            $month_link = get_month_link($year, $month);
+                                            echo '<li class="archive-list__month">';
+                                            echo '<a href="' . esc_url($month_link) . '">' . esc_html($month_name) . '</a>';
                                             echo '</li>';
                                         }
-                                        ?>
+                                        echo '</ul>';
+                                        echo '</li>';
+                                    }
+                                    ?>
                                 </ul>
                             </div>
                         </aside>
@@ -296,6 +279,7 @@
                 </aside>
             </div>
             </aside>
+        </div>
         </div>
     </section>
     <?php get_footer(); ?>
