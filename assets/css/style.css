@@ -199,16 +199,17 @@ a {
 }
 
 .blog-lower-campaign__content-card {
+	background-color: #fff;
+	box-shadow: 0.125rem 0.125rem 0.625rem rgba(0, 0, 0, 0.25);
 	display: flex;
 	flex-direction: column;
 	height: auto;
+	transition: 0.3s;
 	width: 100%;
 }
 
-.blog-lower-campaign__content-card {
-	background-color: #fff;
-	box-shadow: 0.125rem 0.125rem 0.625rem rgba(0, 0, 0, 0.25);
-	display: block;
+.blog-lower-campaign__content-card:hover {
+	transform: translateY(-5px);
 }
 
 .blog-lower-campaign__img img {
@@ -324,7 +325,7 @@ a {
 	margin-left: auto;
 	margin-right: auto;
 	max-width: 37.5rem;
-	padding: 0 0.9375rem;
+	padding: 0 1.3125rem;
 }
 
 .blog-lower__pagenavi {
@@ -2157,6 +2158,12 @@ main {
 	list-style: none;
 	padding-left: 2rem;
 	position: relative;
+	transition: 0.3s;
+}
+
+.archive-list__year:hover,
+.archive-list__month:hover {
+	opacity: 0.7;
 }
 
 .archive-list__year::before,

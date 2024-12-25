@@ -193,7 +193,7 @@
                                     foreach ($campaign_archives as $campaign):
                                     ?>
                                     <li class="blog-lower-campaign__content-card">
-                                        <a href=" <?php echo the_permalink(); ?>">
+                                        <a href=" <?php echo esc_url(home_url('campaign')); ?>">
                                             <div class=" blog-lower-campaign__container">
                                                 <div class="blog-lower-campaign__img">
                                                     <?php if (has_post_thumbnail()): ?>
@@ -291,11 +291,9 @@
                                 </ul>
                             </div>
                         </aside>
-                        </ul>
                     </div>
                 </aside>
             </div>
-            </aside>
         </div>
     </section>
     <?php get_footer(); ?>
