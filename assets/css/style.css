@@ -2589,8 +2589,7 @@ main {
 	margin-top: 1.5rem;
 }
 
-.card-lower-detail__entry p,
-.card-lower-detail__entry li {
+.card-lower-detail__entry p {
 	color: #0D2936;
 	font-family: "Noto Sans JP";
 	font-size: 1rem;
@@ -3629,6 +3628,18 @@ main {
 .voice__button {
 	margin-top: 2.5rem;
 	text-align: center;
+}
+
+.wp-block-list li {
+	padding-left: 1.3125rem;
+	position: relative;
+}
+
+.wp-block-list li::before {
+	content: url(../images/common/hitode-blue.svg);
+	left: -0.015625rem;
+	position: absolute;
+	top: 0.125rem;
 }
 
 @media screen and (min-width: 768px) {

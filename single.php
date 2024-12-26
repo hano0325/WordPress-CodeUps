@@ -22,35 +22,28 @@
         <div class="blog-lower__inner">
             <div class="blog-lower__section">
                 <div class="blog-lower__container">
-                    <ul class="blog-lower__cards cards cards--blog">
-                        <?php if (have_posts()) : ?>
-                        <?php while (have_posts()) : the_post(); ?>
-                        <li class="cards__card card" data-year="<?php echo get_the_date('Y'); ?>"
-                            data-month="<?php echo get_the_date('n'); ?>">
-                            <a href="<?php the_permalink(); ?>" class="card__container">
-                                <div class="card__content">
-                                    <?php if (has_post_thumbnail()): ?>
-                                    <?php the_post_thumbnail('full'); ?>
-                                    <?php else: ?>
-                                    <img src="<?php echo get_template_directory_uri() ?>/assets/images/common/ocean.jpg"
-                                        alt="デフォルト画像">
-                                    <?php endif; ?>
+                    <div class="blog-lower__card-detail card-lower-detail">
+                        <div class="card-lower-detail__content">
+                            <div class="card-lower-detail__container">
+                                <?php while (have_posts()) : the_post(); ?>
+                                <time datetime="<?php echo get_the_date('Y-m-d'); ?>" class="card-lower-detail__date">
+                                    <?php echo get_the_date('Y.m/d'); ?>
+                                </time>
+                                <h1 class="card-lower-detail__title"><?php the_title(); ?></h1>
+                                <div class="card-lower-detail__entry">
+                                    <?php the_content(); ?>
                                 </div>
-                                <div class="card__block">
-                                    <time datetime="<?php echo get_the_date('Y-m-d'); ?>"
-                                        class="card__block-date"><?php echo get_the_date('Y.m/d'); ?></time>
-                                    <p class="card__block-title"><?php the_title(); ?></p>
-                                    <p class="card__block-subtext">
-                                        <?php the_content(); ?>
-                                    </p>
-                                </div>
-                            </a>
-                        </li>
-                        <?php endwhile; ?>
-                        <?php endif; ?>
-                    </ul>
-                    <div class="blog-lower__pagenavi pagenavi">
-                        <?php wp_pagenavi(); ?>
+                            </div>
+                        </div>
+                    </div>
+                    <?php endwhile; ?>
+                    <div class="post-navigation">
+                        <div class="post-navigation__prev">
+                            <?php previous_post_link('%link', ''); ?>
+                        </div>
+                        <div class="post-navigation__next">
+                            <?php next_post_link('%link', ''); ?>
+                        </div>
                     </div>
                 </div>
                 <aside class="blog-lower-slideber blog-lower-slideber-layout">
@@ -87,7 +80,7 @@
                                     <div class="card-article__img">
                                         <?php if (has_post_thumbnail()) : ?>
                                         <img src="<?php echo esc_url(get_the_post_thumbnail_url('post-thumbnail')); ?>"
-                                            alt="デフォルト画像">
+                                            alt="">
                                         <?php else: ?>
                                         <img src="<?php echo get_template_directory_uri() ?>/assets/images/common/ocean.jpg"
                                             alt="デフォルト画像">
@@ -261,33 +254,33 @@
                             <div class="blog-lower-archive__container archive">
                                 <ul class="archive-list">
                                     <?php
-                                        // 投稿データから年と月を取得
-                                        global $wpdb;
-                                        $archives = $wpdb->get_results(" SELECT DISTINCT YEAR(post_date) AS year, MONTH(post_date) AS month FROM $wpdb->posts WHERE post_status = 'publish' AND post_type = 'post' ORDER BY post_date DESC");
-                                        // 年ごとにアーカイブを作成
-                                        $current_year = date('Y');
-                                        $years = [];
-                                        foreach ($archives as $archive) {
-                                            $years[$archive->year][] = $archive->month;
-                                        }
-                                        foreach ($years as $year => $months) {
-                                            $is_active = ($year == $current_year) ? 'is-active' : '';
-                                            $aria_expanded = ($year == $current_year) ? 'true' : 'false';
-                                            $style = ($year == $current_year) ? '' : 'style="display: none;"';
-                                            echo '<li class="archive-list__item">';
-                                            echo '<button class="archive-list__year ' . esc_attr($is_active) . '" aria-expanded="' . esc_attr($aria_expanded) . '">' . esc_html($year) . '</button>';
-                                            echo '<ul class="archive-list__months" ' . $style . '>';
-                                            foreach ($months as $month) {
-                                                $month_name = date_i18n('F', mktime(0, 0, 0, $month, 1));
-                                                $month_link = get_month_link($year, $month);
-                                                echo '<li class="archive-list__month">';
-                                                echo '<a href="' . esc_url($month_link) . '">' . esc_html($month_name) . '</a>';
-                                                echo '</li>';
-                                            }
-                                            echo '</ul>';
-                                            echo '</li>';
-                                        }
-                                        ?>
+                                // 投稿データから年と月を取得
+                                global $wpdb;
+                                $archives = $wpdb->get_results(" SELECT DISTINCT YEAR(post_date) AS year, MONTH(post_date) AS month FROM $wpdb->posts WHERE post_status = 'publish' AND post_type = 'post' ORDER BY post_date DESC");
+                                // 年ごとにアーカイブを作成
+                                $current_year = date('Y');
+                                $years = [];
+                                foreach ($archives as $archive) {
+                                    $years[$archive->year][] = $archive->month;
+                                }
+                                foreach ($years as $year => $months) {
+                                    $is_active = ($year == $current_year) ? 'is-active' : '';
+                                    $aria_expanded = ($year == $current_year) ? 'true' : 'false';
+                                    $style = ($year == $current_year) ? '' : 'style="display: none;"';
+                                    echo '<li class="archive-list__item">';
+                                    echo '<button class="archive-list__year ' . esc_attr($is_active) . '" aria-expanded="' . esc_attr($aria_expanded) . '">' . esc_html($year) . '</button>';
+                                    echo '<ul class="archive-list__months" ' . $style . '>';
+                                    foreach ($months as $month) {
+                                        $month_name = date_i18n('F', mktime(0, 0, 0, $month, 1));
+                                        $month_link = get_month_link($year, $month);
+                                        echo '<li class="archive-list__month">';
+                                        echo '<a href="' . esc_url($month_link) . '">' . esc_html($month_name) . '</a>';
+                                        echo '</li>';
+                                    }
+                                    echo '</ul>';
+                                    echo '</li>';
+                                }
+                                ?>
                                 </ul>
                             </div>
                         </aside>
