@@ -40,9 +40,9 @@
                                     <time datetime="<?php echo get_the_date('Y-m-d'); ?>"
                                         class="card__block-date"><?php echo get_the_date('Y.m/d'); ?></time>
                                     <p class="card__block-title"><?php the_title(); ?></p>
-                                    <p class="card__block-subtext">
+                                    <div class="card__block-subtext">
                                         <?php the_content(); ?>
-                                    </p>
+                                    </div>
                                 </div>
                             </a>
                         </li>

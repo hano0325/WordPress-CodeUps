@@ -221,119 +221,244 @@ function theme_slug_widgets_init() {
   }
   add_action( 'widgets_init', 'theme_slug_widgets_init' );
 
-  // 閲覧数セット
+  // 閲覧数をセット
 function setPostViews($postID) {
-	$count_key = 'post_views_count';
-	$count = get_post_meta($postID, $count_key, true);
+    $count_key = 'post_views_count';
+    $count = get_post_meta($postID, $count_key, true);
 
-	if($count==""){
-		$count = 0;
-		delete_post_meta($postID, $count_key);
-		add_post_meta($postID, $count_key, '0');
-	} else {
-		$count++;
-		update_post_meta($postID, $count_key, $count);
-	}
+    if ($count == "") {
+        $count = 0;
+        delete_post_meta($postID, $count_key);
+        add_post_meta($postID, $count_key, '0');
+    } else {
+        $count++;
+        update_post_meta($postID, $count_key, $count);
+    }
 }
-remove_action( 'wp_head', 'adjacent_posts_rel_link_wp_head', 10, 0);
+remove_action('wp_head', 'adjacent_posts_rel_link_wp_head', 10, 0);
 
-// クローラーカウントしない場合は追加
+// クローラーカウントしない場合
 function is_bot() {
-	$ua = $_SERVER['HTTP_USER_AGENT'];
-	
-	$bot = array(
-		'Googlebot',
-		'Yahoo! Slurp',
-		'Mediapartners-Google',
-		'msnbot',
-		'bingbot',
-		'MJ12bot',
-		'Ezooms',
-		'pirst; MSIE 8.0;',
-		'Google Web Preview',
-		'ia_archiver',
-		'Sogou web spider',
-		'Googlebot-Mobile',
-		'AhrefsBot',
-		'YandexBot',
-		'Purebot',
-		'Baiduspider',
-		'UnwindFetchor',
-		'TweetmemeBot',
-		'MetaURI',
-		'PaperLiBot',
-		'Showyoubot',
-		'JS-Kit',
-		'PostRank',
-		'Crowsnest',
-		'PycURL',
-		'bitlybot',
-		'Hatena',
-		'facebookexternalhit',
-		'NINJA bot',
-		'YahooCacheSystem',
-		'NHN Corp.',
-		'Steeler',
-		'DoCoMo',
-	);
+    $ua = $_SERVER['HTTP_USER_AGENT'];
+    $bot = array(
+        'Googlebot', 'Yahoo! Slurp', 'Mediapartners-Google', 'msnbot', 'bingbot',
+        'MJ12bot', 'Ezooms', 'Google Web Preview', 'ia_archiver', 'Sogou web spider',
+        'Googlebot-Mobile', 'AhrefsBot', 'YandexBot', 'Purebot', 'Baiduspider',
+        'facebookexternalhit', 'Hatena', 'DoCoMo'
+    );
 
-	foreach( $bot as $bot ) {
-		if (stripos( $ua, $bot ) !== false){
-			return true;
-		}
-	}
-	
-	return false;	
-}
-
-// 閲覧数取得
-function getPostViews($postID){
-	$count_key = 'post_views_count';
-	$count = get_post_meta($postID, $count_key, true);
-
-	if($count==""){ //カウントがなければ0をセット
-		delete_post_meta($postID, $count_key);
-		add_post_meta($postID, $count_key, '0');
-		return "0 View";
-	}
-
-	return $count.' Views';
-}
-
-// 管理画面に閲覧数項目を追加する
-function count_add_column( $columns ) {
-    $columns['views'] = '閲覧数';
-    return $columns;
-}
-add_filter( 'manage_posts_columns', 'count_add_column' ); // 投稿ページに追加
-
-
-// 管理画面にページビュー数を表示する
-function count_add_column_data( $column, $post_id ) {
-    switch ( $column ) {
-        case 'views' :
-					echo getPostViews($post_id); // 閲覧数を取得する
-				break;
+    foreach ($bot as $bot) {
+        if (stripos($ua, $bot) !== false) {
+            return true;
+        }
     }
+    return false;
 }
-add_action( 'manage_posts_custom_column' , 'count_add_column_data', 10, 2 ); // 投稿ページに追加
 
+// 閲覧数を取得
+function getPostViews($postID) {
+    $count_key = 'post_views_count';
+    $count = get_post_meta($postID, $count_key, true);
 
-// 閲覧数項目を並び替えれる要素にする
-function my_add_sort($columns){
-  $columns['views'] = 'views_sort';
-  return $columns;
-}
-add_action( 'pre_get_posts', 'my_add_sort_by_meta', 1 );
-
-// 閲覧数クリックで並び替えを実行
-function my_add_sort_by_meta( $query ) {
-  if ( $query->is_main_query() && ( $orderby = $query->get( 'orderby' ) ) ) {
-    switch( $orderby ) {
-      case 'views_sort':
-        $query->set( 'meta_key', 'post_views_count' );
-        $query->set( 'orderby', 'meta_value_num' );
-        break;
+    if ($count == "") { // カウントがなければ0をセット
+        delete_post_meta($postID, $count_key);
+        add_post_meta($postID, $count_key, '0');
+        return "0 Views";
     }
-  }
+
+    return $count . ' Views';
 }
+
+// 人気記事を取得する関数
+function get_popular_posts($number = 3) {
+    $args = array(
+        'post_type' => 'post', // 投稿タイプを指定
+        'meta_key' => 'post_views_count', // 閲覧数を指定
+        'orderby' => 'meta_value_num', // ソートの基準を閲覧数に
+        'order' => 'DESC', // 降順（閲覧数が多い順）でソート
+        'post_status' => 'publish', // 投稿ステータスは公開済み
+        'posts_per_page' => $number, // 投稿表示件数を指定
+    );
+
+    $popular_query = new WP_Query($args);
+    return $popular_query;
+}
+
+// 人気記事のショートコード
+function display_popular_posts_shortcode($atts) {
+    $atts = shortcode_atts(array('number' => 3), $atts, 'popular_posts');
+    $popular_query = get_popular_posts($atts['number']);
+
+    ob_start(); // 出力バッファリングを開始
+    if ($popular_query->have_posts()) {
+        echo '<ul class="popular-posts">';
+        while ($popular_query->have_posts()): $popular_query->the_post();
+            ?>
+	<li>
+	    <a href="<?php the_permalink(); ?>">
+	        <?php the_title(); ?> (<?php echo getPostViews(get_the_ID()); ?>)
+	    </a>
+	</li>
+	<?php
+        endwhile;
+        echo '</ul>';
+    } else {
+        echo '<p>No popular posts found.</p>';
+    }
+    wp_reset_postdata();
+    return ob_get_clean(); // バッファの内容を返す
+}
+add_shortcode('popular_posts', 'display_popular_posts_shortcode'); // ショートコードを追加
+
+
+//   // 人気記事のカウント
+// function set_post_views($postID) {
+//     $count_key = 'post_views_count';
+//     $count = get_post_meta($postID, $count_key, true);
+//     if($count==''){
+//         $count = 0;
+//         delete_post_meta($postID, $count_key);
+//         add_post_meta($postID, $count_key, '0');
+//     } else {
+//         $count++;
+//         update_post_meta($postID, $count_key, $count);
+//     }
+// }
+// // 投稿が表示されるたびに閲覧数をカウントアップ
+// function track_post_views ($post_id) {
+//     if ( !is_single() ) return;
+//     if ( empty ( $post_id) ) {
+//         global $post;
+//         $post_id = $post->ID;
+//     }
+//     set_post_views($post_id);
+// }
+// add_action( 'wp_head', 'track_post_views');
+// // 閲覧数を取得する関数
+// function get_post_views($postID){
+//     $count_key = 'post_views_count';
+//     $count = get_post_meta($postID, $count_key, true);
+//     if($count==''){
+//         delete_post_meta($postID, $count_key);
+//         add_post_meta($postID, $count_key, '0');
+//         return "0 View";
+//     }
+//     return $count.' Views';
+// }
+
+//   // 閲覧数セット
+// function setPostViews($postID) {
+// 	$count_key = 'post_views_count';
+// 	$count = get_post_meta($postID, $count_key, true);
+
+// 	if($count==""){
+// 		$count = 0;
+// 		delete_post_meta($postID, $count_key);
+// 		add_post_meta($postID, $count_key, '0');
+// 	} else {
+// 		$count++;
+// 		update_post_meta($postID, $count_key, $count);
+// 	}
+// }
+// remove_action( 'wp_head', 'adjacent_posts_rel_link_wp_head', 10, 0);
+
+// // クローラーカウントしない場合は追加
+// function is_bot() {
+// 	$ua = $_SERVER['HTTP_USER_AGENT'];
+	
+// 	$bot = array(
+// 		'Googlebot',
+// 		'Yahoo! Slurp',
+// 		'Mediapartners-Google',
+// 		'msnbot',
+// 		'bingbot',
+// 		'MJ12bot',
+// 		'Ezooms',
+// 		'pirst; MSIE 8.0;',
+// 		'Google Web Preview',
+// 		'ia_archiver',
+// 		'Sogou web spider',
+// 		'Googlebot-Mobile',
+// 		'AhrefsBot',
+// 		'YandexBot',
+// 		'Purebot',
+// 		'Baiduspider',
+// 		'UnwindFetchor',
+// 		'TweetmemeBot',
+// 		'MetaURI',
+// 		'PaperLiBot',
+// 		'Showyoubot',
+// 		'JS-Kit',
+// 		'PostRank',
+// 		'Crowsnest',
+// 		'PycURL',
+// 		'bitlybot',
+// 		'Hatena',
+// 		'facebookexternalhit',
+// 		'NINJA bot',
+// 		'YahooCacheSystem',
+// 		'NHN Corp.',
+// 		'Steeler',
+// 		'DoCoMo',
+// 	);
+
+// 	foreach( $bot as $bot ) {
+// 		if (stripos( $ua, $bot ) !== false){
+// 			return true;
+// 		}
+// 	}
+	
+// 	return false;	
+// }
+
+// // 閲覧数取得
+// function getPostViews($postID){
+// 	$count_key = 'post_views_count';
+// 	$count = get_post_meta($postID, $count_key, true);
+
+// 	if($count==""){ //カウントがなければ0をセット
+// 		delete_post_meta($postID, $count_key);
+// 		add_post_meta($postID, $count_key, '0');
+// 		return "0 View";
+// 	}
+
+// 	return $count.' Views';
+// }
+
+// // 管理画面に閲覧数項目を追加する
+// function count_add_column( $columns ) {
+//     $columns['views'] = '閲覧数';
+//     return $columns;
+// }
+// add_filter( 'manage_posts_columns', 'count_add_column' ); // 投稿ページに追加
+
+
+// // 管理画面にページビュー数を表示する
+// function count_add_column_data( $column, $post_id ) {
+//     switch ( $column ) {
+//         case 'views' :
+// 					echo getPostViews($post_id); // 閲覧数を取得する
+// 				break;
+//     }
+// }
+// add_action( 'manage_posts_custom_column' , 'count_add_column_data', 10, 2 ); // 投稿ページに追加
+
+
+// // 閲覧数項目を並び替えれる要素にする
+// function my_add_sort($columns){
+//   $columns['views'] = 'views_sort';
+//   return $columns;
+// }
+// add_action( 'pre_get_posts', 'my_add_sort_by_meta', 1 );
+
+// // 閲覧数クリックで並び替えを実行
+// function my_add_sort_by_meta( $query ) {
+//   if ( $query->is_main_query() && ( $orderby = $query->get( 'orderby' ) ) ) {
+//     switch( $orderby ) {
+//       case 'views_sort':
+//         $query->set( 'meta_key', 'post_views_count' );
+//         $query->set( 'orderby', 'meta_value_num' );
+//         break;
+//     }
+//   }
+// }

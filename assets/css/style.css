@@ -2339,6 +2339,7 @@ main {
 	background-color: #fff;
 	box-shadow: 0.125rem 0.125rem 0.625rem rgba(0, 0, 0, 0.25);
 	cursor: pointer;
+	overflow: hidden;
 }
 
 .card-voice {
@@ -2348,6 +2349,7 @@ main {
 
 .card__container {
 	display: block;
+	overflow: hidden;
 	padding-bottom: 1.5rem;
 	padding-left: 1rem;
 	padding-right: 1rem;
@@ -2463,8 +2465,12 @@ main {
 }
 
 .card__block-subtext {
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 5;
+	display: -webkit-box;
 	font-weight: 400;
 	margin-top: 1rem;
+	overflow: hidden;
 }
 
 .card-voice__block-subtext {
@@ -3086,6 +3092,11 @@ main {
 	white-space: nowrap;
 }
 
+.pagenavi .wp-pagenavi .page:hover {
+	background-color: #408F95;
+	color: #fff;
+}
+
 .pagenavi .wp-pagenavi .current {
 	align-items: center;
 	background-color: #408F95;
@@ -3093,8 +3104,10 @@ main {
 	color: #fff;
 	display: flex;
 	font-size: 1rem;
+	font-weight: 700;
 	height: 2.375rem;
 	justify-content: center;
+	line-height: 1.1875;
 	margin: 0 0.375rem;
 	min-width: 2.375rem;
 	padding: 0 0.75rem;
@@ -3106,7 +3119,9 @@ main {
 }
 
 .pagenavi .wp-pagenavi .previouspostslink,
-.pagenavi .wp-pagenavi .nextpostslink {
+.pagenavi .wp-pagenavi .nextpostslink,
+.pagenavi .wp-pagenavi .previouspostslink-detail,
+.pagenavi .wp-pagenavi .nextpostslink-detail {
 	background-color: #fff;
 	border: 1px solid #408F95;
 	color: #408F95;
@@ -3119,11 +3134,27 @@ main {
 	white-space: nowrap;
 }
 
-.pagenavi .wp-pagenavi .previouspostslink {
+.pagenavi .wp-pagenavi .previouspostslink,
+.pagenavi .wp-pagenavi .previouspostslink-detail {
 	margin-right: 2rem;
 }
 
-.pagenavi .wp-pagenavi .previouspostslink::after {
+.pagenavi .wp-pagenavi .nextpostslink,
+.pagenavi .wp-pagenavi .nextpostslink-detail {
+	margin-left: 2rem;
+}
+
+.pagenavi .wp-pagenavi .previouspostslink-detail a,
+.pagenavi .wp-pagenavi .nextpostslink-detail a {
+	cursor: pointer;
+	display: block;
+	height: 100%;
+	transition: 0.3s;
+	width: 100%;
+}
+
+.pagenavi .wp-pagenavi .previouspostslink::after,
+.pagenavi .wp-pagenavi .previouspostslink-detail a::after {
 	border-right: 1px solid #408f95;
 	border-top: 1px solid #408f95;
 	content: "";
@@ -3136,11 +3167,8 @@ main {
 	width: 0.6875rem;
 }
 
-.pagenavi .wp-pagenavi .nextpostslink {
-	margin-left: 2rem;
-}
-
-.pagenavi .wp-pagenavi .nextpostslink::after {
+.pagenavi .wp-pagenavi .nextpostslink::after,
+.pagenavi .wp-pagenavi .nextpostslink-detail a::after {
 	border-right: 1px solid #408F95;
 	border-top: 1px solid #408F95;
 	content: "";
@@ -3154,16 +3182,22 @@ main {
 	z-index: 10;
 }
 
-.pagenavi .wp-pagenavi .previouspostslink:hover::after,
-.pagenavi .wp-pagenavi .nextpostslink:hover::after {
-	border-right: 1px solid #fff;
-	border-top: 1px solid #fff;
-}
-
-.pagenavi .wp-pagenavi a:hover {
+.pagenavi .wp-pagenavi .previouspostslink:hover,
+.pagenavi .wp-pagenavi .nextpostslink:hover,
+.pagenavi .wp-pagenavi .previouspostslink-detail a:hover,
+.pagenavi .wp-pagenavi .nextpostslink-detail a:hover {
 	background-color: #408F95;
 	color: #fff;
+	cursor: pointer;
 	opacity: 1;
+}
+
+.pagenavi .wp-pagenavi .previouspostslink:hover::after,
+.pagenavi .wp-pagenavi .nextpostslink:hover::after,
+.pagenavi .wp-pagenavi .previouspostslink-detail:hover a::after,
+.pagenavi .wp-pagenavi .nextpostslink-detail:hover a::after {
+	border-right: 1px solid #fff;
+	border-top: 1px solid #fff;
 }
 
 .swiper-button-next,
@@ -3640,6 +3674,10 @@ main {
 	left: -0.015625rem;
 	position: absolute;
 	top: 0.125rem;
+}
+
+.wp-block-image {
+	overflow: hidden;
 }
 
 @media screen and (min-width: 768px) {

@@ -25,9 +25,14 @@
                     <ul class="blog-lower__cards cards cards--blog">
                         <?php if (have_posts()) : ?>
                         <?php while (have_posts()) : the_post(); ?>
+                        <?php 
+                            $cats = get_the_category();
+                            if($cats):
+                                ?>
+                        <?php foreach($cats as $cat): ?>
                         <li class="cards__card card" data-year="<?php echo get_the_date('Y'); ?>"
                             data-month="<?php echo get_the_date('n'); ?>">
-                            <a href="<?php the_permalink(); ?>" class="card__container">
+                            <a href="<?php echo the_permalink(); ?>" class="card__container">
                                 <div class="card__content">
                                     <?php if (has_post_thumbnail()): ?>
                                     <?php the_post_thumbnail('full'); ?>
@@ -40,12 +45,14 @@
                                     <time datetime="<?php echo get_the_date('Y-m-d'); ?>"
                                         class="card__block-date"><?php echo get_the_date('Y.m/d'); ?></time>
                                     <p class="card__block-title"><?php the_title(); ?></p>
-                                    <p class="card__block-subtext">
+                                    <div class="card__block-subtext">
                                         <?php the_content(); ?>
-                                    </p>
+                                    </div>
                                 </div>
                             </a>
                         </li>
+                        <?php endforeach; ?>
+                        <?php endif; ?>
                         <?php endwhile; ?>
                         <?php endif; ?>
                     </ul>
@@ -68,42 +75,48 @@
                                 <h2 class="title-side__main">人気記事</h2>
                             </div>
                         </div>
-                        <?php if( !is_user_logged_in() && !is_bot() ) { setPostViews( get_the_ID() ); } ?>
-                        <?php
-                            $popular_args = array(
-                            'post_type' => 'post', // 投稿タイプを指定
-                            'meta_key' => 'post_views_count', // 閲覧数を指定
-                            'orderby' => 'meta_value_num', // ソートの基準を閲覧数に
-                            'order' => 'DESC', // 降順（閲覧数が多い順）でソート
-                            'post_status' => 'publish', // 投稿ステータスは公開済み
-                            'posts_per_page' => 3, // 投稿表示件数は3件
-                            );
-                            $popular_query = new WP_Query( $popular_args );
-                            if( $popular_query->have_posts() ):
-                            ?>
                         <ul class="blog-lower-slideber__article-cards cards-article">
-                            <li class="cards-article__card card-article">
-                                <a href="<?php echo the_permalink(); ?>" class="card-article__container">
-                                    <div class="card-article__img">
-                                        <?php if (has_post_thumbnail()) : ?>
-                                        <img src="<?php echo esc_url(get_the_post_thumbnail_url('post-thumbnail')); ?>"
-                                            alt="デフォルト画像">
-                                        <?php else: ?>
-                                        <img src="<?php echo get_template_directory_uri() ?>/assets/images/common/ocean.jpg"
-                                            alt="デフォルト画像">
-                                        <?php endif; ?>
-                                    </div>
-                                    <div class="card-article__text-box">
-                                        <time datetime="<?php echo get_the_date('Y-m-d'); ?>"
-                                            class="card-article__date"><?php the_time("Y/m/d"); ?></time>
-                                        <p class="card-article__title"><?php the_title(); ?></p>
-                                    </div>
-                                </a>
-                            </li>
+                            <?php if (!is_user_logged_in() && !is_bot()) { 
+                                setPostViews(get_the_ID()); 
+                                } ?>
+                            <?php
+                                $popular_args = array(
+                                    'post_type' => 'post', // 投稿タイプを指定
+                                    'meta_key' => 'post_views_count', // 閲覧数を指定
+                                    'orderby' => 'meta_value_num', // ソートの基準を閲覧数に
+                                    'order' => 'DESC', // 降順（閲覧数が多い順）でソート
+                                    'post_status' => 'publish', // 投稿ステータスは公開済み
+                                    'posts_per_page' => 3, // 投稿表示件数は3件
+                                );
+                                $popular_query = new WP_Query($popular_args);
+                                if ($popular_query->have_posts()): 
+                                ?>
+                            <ul class="cards-article">
+                                <?php while ($popular_query->have_posts()): $popular_query->the_post(); ?>
+                                <li class="cards-article__card card-article">
+                                    <a href="<?php echo esc_url(get_permalink()); ?>" class="card-article__container">
+                                        <div class="card-article__img">
+                                            <?php if (has_post_thumbnail()) : ?>
+                                            <img src="<?php echo esc_url(get_the_post_thumbnail_url(get_the_ID(), 'post-thumbnail')); ?>"
+                                                alt="<?php the_title_attribute(); ?>">
+                                            <?php else: ?>
+                                            <img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/common/ocean.jpg"
+                                                alt="デフォルト画像">
+                                            <?php endif; ?>
+                                        </div>
+                                        <div class="card-article__text-box">
+                                            <time datetime="<?php echo get_the_date('Y-m-d'); ?>"
+                                                class="card-article__date">
+                                                <?php echo esc_html(get_the_date('Y/m/d')); ?>
+                                            </time>
+                                            <p class="card-article__title"><?php echo esc_html(get_the_title()); ?></p>
+                                        </div>
+                                    </a>
+                                </li>
+                                <?php endwhile; ?>
+                                <?php endif; ?>
+                            </ul>
                         </ul>
-                        <?php else: ?>
-                        <p class="popular__nodata">現在、人気記事はありません</p>
-                        <?php endif; ?>
                         <div class="blog-lower-reviews blog-lower-reviews-layout">
                             <div class="blog-lower-reviews__title title-side">
                                 <div class="title-side__container">
