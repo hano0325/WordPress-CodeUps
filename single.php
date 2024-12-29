@@ -80,42 +80,50 @@
                                     <h2 class="title-side__main">人気記事</h2>
                                 </div>
                             </div>
-                            <?php if( !is_user_logged_in() && !is_bot() ) { setPostViews( get_the_ID() ); } ?>
-                            <?php
-                                $popular_args = array(
-                                'post_type' => 'post', // 投稿タイプを指定
-                                'meta_key' => 'post_views_count', // 閲覧数を指定
-                                'orderby' => 'meta_value_num', // ソートの基準を閲覧数に
-                                'order' => 'DESC', // 降順（閲覧数が多い順）でソート
-                                'post_status' => 'publish', // 投稿ステータスは公開済み
-                                'posts_per_page' => 3, // 投稿表示件数は3件
-                                );
-                                $popular_query = new WP_Query( $popular_args );
-                                if( $popular_query->have_posts() ):
-                                ?>
                             <ul class="blog-lower-slideber__article-cards cards-article">
-                                <li class="cards-article__card card-article">
-                                    <a href="<?php echo the_permalink(); ?>" class="card-article__container">
-                                        <div class="card-article__img">
-                                            <?php if (has_post_thumbnail()) : ?>
-                                            <img src="<?php echo esc_url(get_the_post_thumbnail_url('post-thumbnail')); ?>"
-                                                alt="">
-                                            <?php else: ?>
-                                            <img src="<?php echo get_template_directory_uri() ?>/assets/images/common/ocean.jpg"
-                                                alt="デフォルト画像">
-                                            <?php endif; ?>
-                                        </div>
-                                        <div class="card-article__text-box">
-                                            <time datetime="<?php echo get_the_date('Y-m-d'); ?>"
-                                                class="card-article__date"><?php the_time("Y/m/d"); ?></time>
-                                            <p class="card-article__title"><?php the_title(); ?></p>
-                                        </div>
-                                    </a>
-                                </li>
+                                <?php if (!is_user_logged_in() && !is_bot()) { 
+                                setPostViews(get_the_ID()); 
+                                } ?>
+                                <?php
+                                $popular_args = array(
+                                    'post_type' => 'post', // 投稿タイプを指定
+                                    'meta_key' => 'post_views_count', // 閲覧数を指定
+                                    'orderby' => 'meta_value_num', // ソートの基準を閲覧数に
+                                    'order' => 'DESC', // 降順（閲覧数が多い順）でソート
+                                    'post_status' => 'publish', // 投稿ステータスは公開済み
+                                    'posts_per_page' => 3, // 投稿表示件数は3件
+                                );
+                                $popular_query = new WP_Query($popular_args);
+                                if ($popular_query->have_posts()): 
+                                ?>
+                                <ul class="cards-article">
+                                    <?php while ($popular_query->have_posts()): $popular_query->the_post(); ?>
+                                    <li class="cards-article__card card-article">
+                                        <a href="<?php echo esc_url(get_permalink()); ?>"
+                                            class="card-article__container">
+                                            <div class="card-article__img">
+                                                <?php if (has_post_thumbnail()) : ?>
+                                                <img src="<?php echo esc_url(get_the_post_thumbnail_url(get_the_ID(), 'post-thumbnail')); ?>"
+                                                    alt="<?php the_title_attribute(); ?>">
+                                                <?php else: ?>
+                                                <img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/common/ocean.jpg"
+                                                    alt="デフォルト画像">
+                                                <?php endif; ?>
+                                            </div>
+                                            <div class="card-article__text-box">
+                                                <time datetime="<?php echo get_the_date('Y-m-d'); ?>"
+                                                    class="card-article__date">
+                                                    <?php echo esc_html(get_the_date('Y/m/d')); ?>
+                                                </time>
+                                                <p class="card-article__title"><?php echo esc_html(get_the_title()); ?>
+                                                </p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <?php endwhile; ?>
+                                    <?php endif; ?>
+                                </ul>
                             </ul>
-                            <?php else: ?>
-                            <p class="popular__nodata">現在、人気記事はありません</p>
-                            <?php endif; ?>
                             <div class="blog-lower-reviews blog-lower-reviews-layout">
                                 <div class="blog-lower-reviews__title title-side">
                                     <div class="title-side__container">
@@ -273,33 +281,36 @@
                                 <div class="blog-lower-archive__container archive">
                                     <ul class="archive-list">
                                         <?php
-                                    // 投稿データから年と月を取得
-                                    global $wpdb;
-                                    $archives = $wpdb->get_results(" SELECT DISTINCT YEAR(post_date) AS year, MONTH(post_date) AS month FROM $wpdb->posts WHERE post_status = 'publish' AND post_type = 'post' ORDER BY post_date DESC");
-                                    // 年ごとにアーカイブを作成
-                                    $current_year = date('Y');
-                                    $years = [];
-                                    foreach ($archives as $archive) {
-                                        $years[$archive->year][] = $archive->month;
-                                    }
-                                    foreach ($years as $year => $months) {
-                                        $is_active = ($year == $current_year) ? 'is-active' : '';
-                                        $aria_expanded = ($year == $current_year) ? 'true' : 'false';
-                                        $style = ($year == $current_year) ? '' : 'style="display: none;"';
-                                        echo '<li class="archive-list__item">';
-                                        echo '<button class="archive-list__year ' . esc_attr($is_active) . '" aria-expanded="' . esc_attr($aria_expanded) . '">' . esc_html($year) . '</button>';
-                                        echo '<ul class="archive-list__months" ' . $style . '>';
-                                        foreach ($months as $month) {
-                                            $month_name = date_i18n('F', mktime(0, 0, 0, $month, 1));
-                                            $month_link = get_month_link($year, $month);
-                                            echo '<li class="archive-list__month">';
-                                            echo '<a href="' . esc_url($month_link) . '">' . esc_html($month_name) . '</a>';
+                                        global $wpdb;
+                                        $archives = $wpdb->get_results("SELECT DISTINCT YEAR(post_date) AS year, MONTH(post_date) AS month FROM $wpdb->posts WHERE post_status = 'publish' AND post_type = 'post' ORDER BY post_date DESC");
+
+                                        $current_year = date('Y');
+                                        $years = [];
+                                        foreach ($archives as $archive) {
+                                            $years[$archive->year][] = $archive->month;
+                                        }
+                                        foreach ($years as $year => $months) {
+                                            $is_active = ($year == $current_year) ? 'is-active' : '';
+                                            $aria_expanded = ($year == $current_year) ? 'true' : 'false';
+                                            $style = ($year == $current_year) ? '' : 'style="display: none;"';
+                                            echo '<li class="archive-list__item">';
+                                            echo '<div class="archive-list__year-container">';
+                                            echo '<button class="archive-list__year ' . esc_attr($is_active) . '" aria-expanded="' . esc_attr($aria_expanded) . '" data-year="' . esc_attr($year) . '">';
+                                            echo '<a href="' . esc_url(get_year_link($year)) . '">' . esc_html($year) . '</a>';
+                                            echo '</button>';
+                                            echo '</div>';
+                                            echo '<ul class="archive-list__months" ' . $style . '>';
+                                            foreach ($months as $month) {
+                                                $month_name = date_i18n('F', mktime(0, 0, 0, $month, 1));
+                                                $month_link = get_month_link($year, $month);
+                                                echo '<li class="archive-list__month">';
+                                                echo '<a href="' . esc_url($month_link) . '">' . esc_html($month_name) . '</a>';
+                                                echo '</li>';
+                                            }
+                                            echo '</ul>';
                                             echo '</li>';
                                         }
-                                        echo '</ul>';
-                                        echo '</li>';
-                                    }
-                                    ?>
+                                        ?>
                                     </ul>
                                 </div>
                             </aside>

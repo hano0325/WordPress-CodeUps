@@ -274,10 +274,9 @@
                             <div class="blog-lower-archive__container archive">
                                 <ul class="archive-list">
                                     <?php
-                                        // 投稿データから年と月を取得
                                         global $wpdb;
-                                        $archives = $wpdb->get_results(" SELECT DISTINCT YEAR(post_date) AS year, MONTH(post_date) AS month FROM $wpdb->posts WHERE post_status = 'publish' AND post_type = 'post' ORDER BY post_date DESC");
-                                        // 年ごとにアーカイブを作成
+                                        $archives = $wpdb->get_results("SELECT DISTINCT YEAR(post_date) AS year, MONTH(post_date) AS month FROM $wpdb->posts WHERE post_status = 'publish' AND post_type = 'post' ORDER BY post_date DESC");
+
                                         $current_year = date('Y');
                                         $years = [];
                                         foreach ($archives as $archive) {
@@ -288,7 +287,11 @@
                                             $aria_expanded = ($year == $current_year) ? 'true' : 'false';
                                             $style = ($year == $current_year) ? '' : 'style="display: none;"';
                                             echo '<li class="archive-list__item">';
-                                            echo '<button class="archive-list__year ' . esc_attr($is_active) . '" aria-expanded="' . esc_attr($aria_expanded) . '">' . esc_html($year) . '</button>';
+                                            echo '<div class="archive-list__year-container">';
+                                            echo '<button class="archive-list__year ' . esc_attr($is_active) . '" aria-expanded="' . esc_attr($aria_expanded) . '" data-year="' . esc_attr($year) . '">';
+                                            echo '<a href="' . esc_url(get_year_link($year)) . '">' . esc_html($year) . '</a>';
+                                            echo '</button>';
+                                            echo '</div>';
                                             echo '<ul class="archive-list__months" ' . $style . '>';
                                             foreach ($months as $month) {
                                                 $month_name = date_i18n('F', mktime(0, 0, 0, $month, 1));
