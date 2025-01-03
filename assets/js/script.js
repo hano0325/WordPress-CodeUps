@@ -147,62 +147,32 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 });
-
 document.addEventListener('DOMContentLoaded', function () {
   var yearButtons = document.querySelectorAll('.archive-list__year');
   var archiveMonths = document.querySelectorAll('.archive-list__months');
+  var cards = document.querySelectorAll('.cards__card');
 
-  // 初期設定: 非アクティブな年の月リストを隠す
+  // ページ読み込み時の初期設定
   archiveMonths.forEach(function (monthsList) {
-    var parentButton = monthsList.previousElementSibling.querySelector('button');
-    if (!parentButton.classList.contains('is-active')) {
+    var parentYearButton = monthsList.previousElementSibling;
+    if (!parentYearButton.classList.contains('is-active')) {
       monthsList.style.display = 'none';
     }
   });
 
-  // 年ボタンのクリックイベント
+  // 年ボタンをクリックしたときの処理
   yearButtons.forEach(function (button) {
-    button.addEventListener('click', function (e) {
-      // aタグのクリックの場合はリンク動作を許可
-      if (e.target.tagName === 'A') return;
-
+    button.addEventListener('click', function () {
       var isExpanded = button.getAttribute('aria-expanded') === 'true';
-      var monthsList = button.closest('.archive-list__year-container').nextElementSibling;
+      var monthsList = button.nextElementSibling;
 
-      // トグル操作
+      // トグル動作
       button.setAttribute('aria-expanded', !isExpanded);
       button.classList.toggle('is-active');
       monthsList.style.display = isExpanded ? 'none' : 'block';
     });
   });
 });
-
-// document.addEventListener('DOMContentLoaded', function () {
-//   var yearButtons = document.querySelectorAll('.archive-list__year');
-//   var archiveMonths = document.querySelectorAll('.archive-list__months');
-//   var cards = document.querySelectorAll('.cards__card');
-
-//   // ページ読み込み時の初期設定
-//   archiveMonths.forEach(function (monthsList) {
-//     var parentYearButton = monthsList.previousElementSibling;
-//     if (!parentYearButton.classList.contains('is-active')) {
-//       monthsList.style.display = 'none';
-//     }
-//   });
-
-//   // 年ボタンをクリックしたときの処理
-//   yearButtons.forEach(function (button) {
-//     button.addEventListener('click', function () {
-//       var isExpanded = button.getAttribute('aria-expanded') === 'true';
-//       var monthsList = button.nextElementSibling;
-
-//       // トグル動作
-//       button.setAttribute('aria-expanded', !isExpanded);
-//       button.classList.toggle('is-active');
-//       monthsList.style.display = isExpanded ? 'none' : 'block';
-//     });
-//   });
-// });
 
 // コース画像モーダル表示イベント
 $(".gallery-list__item img").click(function () {

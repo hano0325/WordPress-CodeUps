@@ -3263,7 +3263,7 @@ main {
 	margin-top: 2.5rem;
 }
 
-.tab-voice__contents-content.is-active {
+.tab-voice__contents-content {
 	grid-row-gap: 2.5rem;
 	background-color: #fff;
 	display: grid;
@@ -3271,10 +3271,6 @@ main {
 	margin-left: auto;
 	margin-right: auto;
 	row-gap: 2.5rem;
-}
-
-.tab-voice__contents-content {
-	display: none;
 }
 
 .tab__list {
@@ -5078,7 +5074,7 @@ html {
 	margin-top: 2.8125rem;
 }
 
-.tab-voice__contents-content.is-active {
+.tab-voice__contents-content {
 	-moz-column-gap: 2.5rem;
 	column-gap: 2.5rem;
 	grid-template-columns: repeat(2, 1fr);

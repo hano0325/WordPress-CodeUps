@@ -50,30 +50,52 @@
                 </div>
                 <div class="tab-voice__contents">
                     <ul class="tab-voice__contents-content">
+                        <?php
+                        $args = [
+                            "post_type" => "voice",
+                            "posts_per_page" => 6
+                        ];
+                        $the_query = new WP_Query($args);
+                        ?>
+                        <?php if (have_posts()): ?>
+                        <?php while (have_posts()): the_post(); ?>
+                        <?php
+                            $gender_age = SCF::get('gender_age'); ?>
+                        <?php if (!empty($gender_age)) : ?>
+                        <?php foreach ($gender_age as $voice) : ?>
                         <li class="tab-voice__card card-voice">
                             <div class="card-voice__container">
                                 <div class="card-voice__container-text">
                                     <div class="card-voice__text-box text-box">
-                                        <p class="card-voice__profile">20代(女性)</p>
+                                        <p class="card-voice__profile">
+                                            <?php echo esc_html($voice['voice_title']); ?>
+                                        </p>
                                         <p class="card-voice__text-box-maintitle text-box-maintitle">
-                                            ライセンス講習
+                                            <?php echo esc_html($voice['category']); ?>
                                         </p>
                                         <p class="card-voice__text-box-subtitle text-box-subtitle">
-                                            ここにタイトルが入ります。ここにタイトル
+                                            <?php echo esc_html($voice['title_text']); ?>
                                         </p>
                                     </div>
                                     <div class="card-voice__content colorbox">
                                         <div class="color"></div>
-                                        <img src="./assets/images/common/voice.jpg" alt="麦わら帽子を被った女性の写真" />
+                                        <?php if (has_post_thumbnail()): ?>
+                                        <?php the_post_thumbnail('full'); ?>
+                                        <?php else: ?>
+                                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/common/cats.jpg"
+                                            alt="デフォルト画像" />
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                                 <p class="card-voice__block-subtext">
-                                    ここにテキストが入ります。ここにテキストが入ります。ここにテキストが入ります。ここにテキストが入ります。<br />
-                                    ここにテキストが入ります。ここにテキストが入ります。ここにテキストが入ります。ここにテキストが入ります。ここにテキストが入ります。ここにテキストが入ります。ここにテキストが入ります。<br />
-                                    ここにテキストが入ります。ここにテキストが入ります。
+                                    <?php echo esc_html($voice['description']); ?>
                                 </p>
                             </div>
                         </li>
+                        <?php endforeach; ?>
+                        <?php endif; ?>
+                        <?php endwhile; ?>
+                        <?php endif; ?>
                     </ul>
                 </div>
                 <div class="voice-lower__pagenavi pagenavi">
