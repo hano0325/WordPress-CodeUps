@@ -147,29 +147,60 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 });
-document.addEventListener('DOMContentLoaded', function () {
-  var yearButtons = document.querySelectorAll('.archive-list__year');
-  var archiveMonths = document.querySelectorAll('.archive-list__months');
-  var cards = document.querySelectorAll('.cards__card');
+document.addEventListener("DOMContentLoaded", function () {
+  // 年ボタンと月リストを取得
+  var yearButtons = document.querySelectorAll(".archive-list__year");
+  var archiveMonths = document.querySelectorAll(".archive-list__months");
 
-  // ページ読み込み時の初期設定
+  // 最新の年を取得
+  var latestYearButton = null;
+  var latestYear = null;
+  if (yearButtons.length > 0) {
+    latestYearButton = yearButtons[0]; // 最初のボタンが最新の年（降順で出力されている前提）
+    latestYear = latestYearButton.getAttribute("data-year"); // 最新の年を取得
+  }
+
+  // 最新の年のトグルボタンをアクティブにして月アーカイブを展開
+  if (latestYearButton) {
+    var monthsList = latestYearButton.parentElement.nextElementSibling;
+    latestYearButton.setAttribute("aria-expanded", "true");
+    latestYearButton.classList.add("is-active"); // トグルボタンをアクティブに
+    monthsList.style.display = "block"; // 最新年の月アーカイブを表示
+  }
+
+  // 他の年の月アーカイブを非表示
   archiveMonths.forEach(function (monthsList) {
-    var parentYearButton = monthsList.previousElementSibling;
-    if (!parentYearButton.classList.contains('is-active')) {
-      monthsList.style.display = 'none';
+    var parentYearButton = monthsList.previousElementSibling.querySelector(".archive-list__year");
+    if (parentYearButton.getAttribute("data-year") !== latestYear) {
+      monthsList.style.display = "none";
+      parentYearButton.setAttribute("aria-expanded", "false");
+      parentYearButton.classList.remove("is-active");
     }
   });
 
-  // 年ボタンをクリックしたときの処理
+  // 年ボタンクリック時のトグル動作
   yearButtons.forEach(function (button) {
-    button.addEventListener('click', function () {
-      var isExpanded = button.getAttribute('aria-expanded') === 'true';
-      var monthsList = button.nextElementSibling;
+    button.addEventListener("click", function () {
+      var isExpanded = button.getAttribute("aria-expanded") === "true";
+      var monthsList = button.parentElement.nextElementSibling;
+      if (isExpanded) {
+        // トグルを閉じる
+        button.setAttribute("aria-expanded", "false");
+        button.classList.remove("is-active");
+        monthsList.style.display = "none";
+      } else {
+        // 他の年の月アーカイブを閉じる
+        yearButtons.forEach(function (otherButton) {
+          otherButton.setAttribute("aria-expanded", "false");
+          otherButton.classList.remove("is-active");
+          otherButton.parentElement.nextElementSibling.style.display = "none";
+        });
 
-      // トグル動作
-      button.setAttribute('aria-expanded', !isExpanded);
-      button.classList.toggle('is-active');
-      monthsList.style.display = isExpanded ? 'none' : 'block';
+        // 現在の年の月アーカイブを展開
+        button.setAttribute("aria-expanded", "true");
+        button.classList.add("is-active");
+        monthsList.style.display = "block";
+      }
     });
   });
 });
@@ -219,43 +250,71 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 });
-document.addEventListener('DOMContentLoaded', function () {
-  var tabs = document.querySelectorAll('.tab__button');
-  var tabContents = document.querySelectorAll('.tab__campaign-contents-content');
+document.addEventListener("DOMContentLoaded", function () {
+  // タブボタンとコンテンツを取得
+  var tabs = document.querySelectorAll(".information-lower__tab-button");
+  var contents = document.querySelectorAll(".information-lower__contents-content");
 
-  // クエリーパラメーターから現在のタブを取得
-  var urlParams = new URLSearchParams(window.location.search);
-  var activeTab = urlParams.get('tab') || 'tab01'; // デフォルトは tab01
-
-  // 初期表示: アクティブなタブを切り替え
+  // 初期表示: data-number="tab01" をアクティブに
   tabs.forEach(function (tab) {
-    tab.classList.toggle('is-active', tab.getAttribute('data-number') === activeTab);
+    if (tab.getAttribute("data-number") === "tab01") {
+      tab.classList.add("is-active");
+    } else {
+      tab.classList.remove("is-active");
+    }
   });
-  tabContents.forEach(function (content) {
-    content.classList.toggle('is-active', content.id === activeTab);
+  contents.forEach(function (content) {
+    if (content.id === "tab01") {
+      content.classList.add("is-active");
+    } else {
+      content.classList.remove("is-active");
+    }
   });
 
-  // WordPressキャンペーンのタブ切り替え
-  // タブクリック時の切り替え処理
+  // タブクリックイベント
   tabs.forEach(function (tab) {
-    tab.addEventListener('click', function (e) {
+    tab.addEventListener("click", function (e) {
       e.preventDefault();
-      var targetTab = this.getAttribute('data-number');
+      var targetTab = this.getAttribute("data-number");
 
       // タブのアクティブ状態を更新
       tabs.forEach(function (t) {
-        return t.classList.remove('is-active');
+        return t.classList.remove("is-active");
       });
-      this.classList.add('is-active');
+      this.classList.add("is-active");
 
-      // コンテンツのアクティブ状態を更新
-      tabContents.forEach(function (content) {
-        content.classList.toggle('is-active', content.id === targetTab);
+      // 対応するコンテンツを表示
+      contents.forEach(function (content) {
+        if (content.id === targetTab) {
+          content.classList.add("is-active");
+        } else {
+          content.classList.remove("is-active");
+        }
       });
-
-      // URLクエリーパラメーターを更新
-      var newUrl = "".concat(window.location.pathname, "?tab=").concat(targetTab);
-      history.pushState(null, '', newUrl);
     });
+  });
+});
+
+//   // WordPressキャンペーンのタブ切り替え
+// タブクリック時の切り替え処理
+tabs.forEach(function (tab) {
+  tab.addEventListener('click', function (e) {
+    e.preventDefault();
+    var targetTab = this.getAttribute('data-number');
+
+    // タブのアクティブ状態を更新
+    tabs.forEach(function (t) {
+      return t.classList.remove('is-active');
+    });
+    this.classList.add('is-active');
+
+    // コンテンツのアクティブ状態を更新
+    tabContents.forEach(function (content) {
+      content.classList.toggle('is-active', content.id === targetTab);
+    });
+
+    // URLクエリーパラメーターを更新
+    var newUrl = "".concat(window.location.pathname, "?tab=").concat(targetTab);
+    history.pushState(null, '', newUrl);
   });
 });

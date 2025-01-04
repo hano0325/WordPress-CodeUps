@@ -30,19 +30,16 @@
                         ?>
                     <!-- "ALL" タブボタン -->
                     <a class="tab__button <?php echo $is_archive_page ? 'is-active' : ''; ?>"
-                        href="<?php echo esc_url(get_post_type_archive_link('campaign')); ?>" data-tab="all">
+                        href="<?php echo esc_url(get_post_type_archive_link('campaign')); ?>">
                         ALL
                     </a>
                     <?php
-                    // 各タームごとにタブを生成
                     if (!empty($terms)) :
                         foreach ($terms as $term) :
-                            // 現在のタームページと一致しているかチェック
                             $is_active_term = is_tax('campaign_category', $term->slug);
                             ?>
                     <a class="tab__button <?php echo $is_active_term ? 'is-active' : ''; ?>"
-                        href="<?php echo esc_url(get_term_link($term)); ?>"
-                        data-tab="<?php echo esc_html($term->slug); ?>">
+                        href="<?php echo esc_url(get_term_link($term)); ?>">
                         <?php echo esc_html($term->name); ?>
                     </a>
                     <?php endforeach;

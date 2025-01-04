@@ -2474,12 +2474,16 @@ main {
 }
 
 .card-voice__block-subtext {
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 7;
 	color: #0D2936;
+	display: -webkit-box;
 	font-family: "Noto Sans JP";
 	font-size: 1rem;
 	font-weight: 400;
 	line-height: 1.5;
 	margin-top: 1rem;
+	overflow: hidden;
 }
 
 .card-article {
@@ -2532,6 +2536,14 @@ main {
 	font-size: 1rem;
 	font-weight: 500;
 	line-height: 1.4375;
+}
+
+.card-reviews__container {
+	transition: 0.3s;
+}
+
+.card-reviews__container:hover {
+	opacity: 0.7;
 }
 
 .card-review__img {
@@ -2589,9 +2601,6 @@ main {
 }
 
 .card-lower-detail__entry {
-	display: flex;
-	flex-direction: column;
-	gap: 1.5rem;
 	margin-top: 1.5rem;
 }
 
@@ -2613,6 +2622,14 @@ main {
 	left: -0.015625rem;
 	position: absolute;
 	top: 0.125rem;
+}
+
+.card-lower-detail__date {
+	color: #0D2936;
+	font-family: "Gotu";
+	font-size: 0.875rem;
+	font-weight: 400;
+	line-height: 1.826;
 }
 
 .cards {
@@ -3695,6 +3712,10 @@ html {
 	padding-top: 5.625rem;
 }
 
+.blog-lower-campaign-layout {
+	margin-top: 3.125rem;
+}
+
 .blog-lower-layout {
 	display: flex;
 	gap: 2.3125rem;
@@ -4711,7 +4732,7 @@ html {
 }
 
 .card-voice__profile {
-	width: 3.75rem;
+	width: 50%;
 }
 
 .card-voice__text-box-maintitle {
@@ -4755,7 +4776,6 @@ html {
 }
 
 .card-lower-detail__entry {
-	gap: 2.5rem;
 	margin-top: 2.5rem;
 }
 

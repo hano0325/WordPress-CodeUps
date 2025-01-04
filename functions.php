@@ -165,6 +165,20 @@ function set_campaign_posts_per_page($query) {
 // pre_get_posts フックを追加
 add_action('pre_get_posts', 'set_campaign_posts_per_page');
 
+// voiceアーカイブページの投稿数を6件に設定
+function set_voice_posts_per_page($query) {
+    // 管理画面ではなく、メインクエリが対象
+    if (!is_admin() && $query->is_main_query()) {
+        // カスタム投稿タイプ "voice" のアーカイブページ
+        if ($query->is_post_type_archive('voice')) {
+            $query->set('posts_per_page', 6); // 1ページあたり6件表示
+        }
+    }
+}
+// pre_get_posts フックを追加
+add_action('pre_get_posts', 'set_voice_posts_per_page');
+
+
 
 
 function custom_pagination($query) {
@@ -309,156 +323,3 @@ function display_popular_posts_shortcode($atts) {
     return ob_get_clean(); // バッファの内容を返す
 }
 add_shortcode('popular_posts', 'display_popular_posts_shortcode'); // ショートコードを追加
-
-
-//   // 人気記事のカウント
-// function set_post_views($postID) {
-//     $count_key = 'post_views_count';
-//     $count = get_post_meta($postID, $count_key, true);
-//     if($count==''){
-//         $count = 0;
-//         delete_post_meta($postID, $count_key);
-//         add_post_meta($postID, $count_key, '0');
-//     } else {
-//         $count++;
-//         update_post_meta($postID, $count_key, $count);
-//     }
-// }
-// // 投稿が表示されるたびに閲覧数をカウントアップ
-// function track_post_views ($post_id) {
-//     if ( !is_single() ) return;
-//     if ( empty ( $post_id) ) {
-//         global $post;
-//         $post_id = $post->ID;
-//     }
-//     set_post_views($post_id);
-// }
-// add_action( 'wp_head', 'track_post_views');
-// // 閲覧数を取得する関数
-// function get_post_views($postID){
-//     $count_key = 'post_views_count';
-//     $count = get_post_meta($postID, $count_key, true);
-//     if($count==''){
-//         delete_post_meta($postID, $count_key);
-//         add_post_meta($postID, $count_key, '0');
-//         return "0 View";
-//     }
-//     return $count.' Views';
-// }
-
-//   // 閲覧数セット
-// function setPostViews($postID) {
-// 	$count_key = 'post_views_count';
-// 	$count = get_post_meta($postID, $count_key, true);
-
-// 	if($count==""){
-// 		$count = 0;
-// 		delete_post_meta($postID, $count_key);
-// 		add_post_meta($postID, $count_key, '0');
-// 	} else {
-// 		$count++;
-// 		update_post_meta($postID, $count_key, $count);
-// 	}
-// }
-// remove_action( 'wp_head', 'adjacent_posts_rel_link_wp_head', 10, 0);
-
-// // クローラーカウントしない場合は追加
-// function is_bot() {
-// 	$ua = $_SERVER['HTTP_USER_AGENT'];
-	
-// 	$bot = array(
-// 		'Googlebot',
-// 		'Yahoo! Slurp',
-// 		'Mediapartners-Google',
-// 		'msnbot',
-// 		'bingbot',
-// 		'MJ12bot',
-// 		'Ezooms',
-// 		'pirst; MSIE 8.0;',
-// 		'Google Web Preview',
-// 		'ia_archiver',
-// 		'Sogou web spider',
-// 		'Googlebot-Mobile',
-// 		'AhrefsBot',
-// 		'YandexBot',
-// 		'Purebot',
-// 		'Baiduspider',
-// 		'UnwindFetchor',
-// 		'TweetmemeBot',
-// 		'MetaURI',
-// 		'PaperLiBot',
-// 		'Showyoubot',
-// 		'JS-Kit',
-// 		'PostRank',
-// 		'Crowsnest',
-// 		'PycURL',
-// 		'bitlybot',
-// 		'Hatena',
-// 		'facebookexternalhit',
-// 		'NINJA bot',
-// 		'YahooCacheSystem',
-// 		'NHN Corp.',
-// 		'Steeler',
-// 		'DoCoMo',
-// 	);
-
-// 	foreach( $bot as $bot ) {
-// 		if (stripos( $ua, $bot ) !== false){
-// 			return true;
-// 		}
-// 	}
-	
-// 	return false;	
-// }
-
-// // 閲覧数取得
-// function getPostViews($postID){
-// 	$count_key = 'post_views_count';
-// 	$count = get_post_meta($postID, $count_key, true);
-
-// 	if($count==""){ //カウントがなければ0をセット
-// 		delete_post_meta($postID, $count_key);
-// 		add_post_meta($postID, $count_key, '0');
-// 		return "0 View";
-// 	}
-
-// 	return $count.' Views';
-// }
-
-// // 管理画面に閲覧数項目を追加する
-// function count_add_column( $columns ) {
-//     $columns['views'] = '閲覧数';
-//     return $columns;
-// }
-// add_filter( 'manage_posts_columns', 'count_add_column' ); // 投稿ページに追加
-
-
-// // 管理画面にページビュー数を表示する
-// function count_add_column_data( $column, $post_id ) {
-//     switch ( $column ) {
-//         case 'views' :
-// 					echo getPostViews($post_id); // 閲覧数を取得する
-// 				break;
-//     }
-// }
-// add_action( 'manage_posts_custom_column' , 'count_add_column_data', 10, 2 ); // 投稿ページに追加
-
-
-// // 閲覧数項目を並び替えれる要素にする
-// function my_add_sort($columns){
-//   $columns['views'] = 'views_sort';
-//   return $columns;
-// }
-// add_action( 'pre_get_posts', 'my_add_sort_by_meta', 1 );
-
-// // 閲覧数クリックで並び替えを実行
-// function my_add_sort_by_meta( $query ) {
-//   if ( $query->is_main_query() && ( $orderby = $query->get( 'orderby' ) ) ) {
-//     switch( $orderby ) {
-//       case 'views_sort':
-//         $query->set( 'meta_key', 'post_views_count' );
-//         $query->set( 'orderby', 'meta_value_num' );
-//         break;
-//     }
-//   }
-// }

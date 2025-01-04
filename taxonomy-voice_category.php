@@ -8,7 +8,7 @@
             <picture>
                 <source srcset="<?php echo get_template_directory_uri() ?>/assets/images/common/voice-pc.jpg"
                     media="(min-width: 768px)" />
-                <img src="<?php echo get_template_directory_uri() ?>/assets/images/common/voice-sp.jpg"
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/common/voice-sp.jpg"
                     alt="海面上にダイバーが複数人いる写真">
             </picture>
         </div>
@@ -22,28 +22,28 @@
                 <!-- タブボタン -->
                 <div class="tab__list">
                     <?php
-                        $is_archive_page = is_post_type_archive('voice');
-                        $terms = get_terms(array(
-                            'taxonomy' => 'voice_category',
-                            'hide_empty' => true,
-                        ));
-                        ?>
+                    $current_term = get_queried_object();
+                    $terms = get_terms(array(
+                        'taxonomy' => 'voice_category',
+                        'hide_empty' => true,
+                    ));
+                    ?>
                     <!-- "ALL" タブボタン -->
-                    <a class="tab__button <?php echo $is_archive_page ? 'is-active' : ''; ?>"
+                    <a class="tab__button <?php echo (!is_tax('voice_category')) ? 'is-active' : ''; ?>"
                         href="<?php echo esc_url(get_post_type_archive_link('voice')); ?>">
                         ALL
                     </a>
                     <?php
                     if (!empty($terms)) :
                         foreach ($terms as $term) :
-                            $is_active_term = is_tax('voice_category', $term->slug);
+                            $is_active = ($current_term && $current_term->slug === $term->slug);
                             ?>
-                    <a class="tab__button <?php echo $is_active_term ? 'is-active' : ''; ?>"
+                    <a class="tab__button <?php echo $is_active ? 'is-active' : ''; ?>"
                         href="<?php echo esc_url(get_term_link($term)); ?>">
                         <?php echo esc_html($term->name); ?>
                     </a>
                     <?php endforeach;
-                endif; ?>
+                    endif; ?>
                 </div>
                 <div class="tab-voice__contents">
                     <ul class="tab-voice__contents-content">
@@ -57,7 +57,7 @@
                         <?php if (have_posts()): ?>
                         <?php while (have_posts()): the_post(); ?>
                         <?php
-                            $gender_age = SCF::get('gender_age'); ?>
+                        $gender_age = SCF::get('gender_age'); ?>
                         <?php if (!empty($gender_age)) : ?>
                         <?php foreach ($gender_age as $voice) : ?>
                         <li class="tab-voice__card card-voice">
@@ -99,5 +99,6 @@
                     <?php wp_pagenavi(); ?>
                 </div>
             </div>
+        </div>
     </section>
     <?php get_footer(); ?>

@@ -26,12 +26,9 @@
         <div class="information-lower__inner inner">
             <div class="information-lower__tab">
                 <div class="information-lower__tab-list">
-                    <a class="information-lower__tab-button js-tab-button is-active" data-number="tab01">ライセンス<br
-                            class="u-mobile">講習</a>
-                    <a class="information-lower__tab-button js-tab-button" data-number="tab02">ファン<br
-                            class="u-mobile">ダイビング</a>
-                    <a class="information-lower__tab-button js-tab-button" data-number="tab03">体験<br
-                            class="u-mobile">ダイビング</a>
+                    <a class="information-lower__tab-button" data-number="tab01">ライセンス<br class="u-mobile">講習</a>
+                    <a class="information-lower__tab-button" data-number="tab02">ファン<br class="u-mobile">ダイビング</a>
+                    <a class="information-lower__tab-button" data-number="tab03">体験<br class="u-mobile">ダイビング</a>
                 </div>
                 <div class="information-lower__contents">
                     <ul id="tab01" class="information-lower__contents-content js-tab-content is-active ">

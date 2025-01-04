@@ -19,7 +19,7 @@
     </div>
     <main>
         <section class="blog-lower blog-lower-layout">
-            <div class="blog-lower__inner">
+            <div class="blog-lower__inner inner">
                 <div class="blog-lower__section">
                     <div class="blog-lower__container">
                         <div class="blog-lower__card-detail card-lower-detail">
@@ -140,37 +140,48 @@
                                 </div>
                                 <div class="blog-lower-reviews__cards cards-reviews">
                                     <?php
-                                    if (have_posts()): 
-                                    while (have_posts()): the_post();
-                                    $voice_cards = SCF::get('voice_cards');
-                                    if (!empty($voice_cards)):
-                                    $latest_card = $voice_cards[0];
-                                    ?>
+                                    $args = array(
+                                        'post_type'      => 'voice', // 投稿タイプ
+                                        'posts_per_page' => 1,       // 最新の2件を取得
+                                    );
+                                    $query = new WP_Query($args);
+
+                                    if ($query->have_posts()): ?>
                                     <ul class="cards-reviews">
+                                        <?php while ($query->have_posts()): $query->the_post();
+                                    $gender_age = SCF::get('gender_age'); // カスタムフィールドを取得
+
+                                    if (!empty($gender_age)):
+                                    foreach ($gender_age as $voice): ?>
                                         <li class="cards-reviews__card card-reviews">
-                                            <a href="<?php echo $voice?>" class="card-reviews__container">
-                                                <div class=" card-reviews__img">
-                                                    <?php if (!empty($latest_card['image'])): ?>
-                                                    <img src="<?php echo esc_url(wp_get_attachment_url($latest_card['image'])); ?>"
-                                                        alt="">
+                                            <a href="#" class="card-reviews__container">
+                                                <div class="card-reviews__img">
+                                                    <?php if (has_post_thumbnail()): ?>
+                                                    <?php the_post_thumbnail('full'); ?>
+                                                    <?php else: ?>
+                                                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/common/cats.jpg"
+                                                        alt="デフォルト画像">
                                                     <?php endif; ?>
                                                 </div>
                                                 <div class="card-reviews__text-box">
-                                                    <?php if (!empty($latest_card['gender_age'])): ?>
+                                                    <?php if (!empty($voice['voice_title'])): ?>
                                                     <div class="card-reviews__profile">
-                                                        <?php echo esc_html($latest_card['gender_age']); ?></div>
+                                                        <?php echo esc_html($voice['voice_title']); ?>
+                                                    </div>
                                                     <?php endif; ?>
-                                                    <?php if (!empty($latest_card['title'])): ?>
+                                                    <?php if (!empty($voice['title_text'])): ?>
                                                     <p class="card-reviews__text">
-                                                        <?php echo esc_html($latest_card['title']); ?></p>
+                                                        <?php echo esc_html($voice['title_text']); ?>
+                                                    </p>
                                                     <?php endif; ?>
                                                 </div>
                                             </a>
                                         </li>
+                                        <?php endforeach;
+                                        endif;
+                                    endwhile; ?>
                                     </ul>
-                                    <?php endif;
-                                        endwhile;
-                                    endif;?>
+                                    <?php endif; ?>
                                     <div class="blog-lower-reviews__button">
                                         <a href="<?php echo esc_url(home_url('voice')); ?>" class="button">
                                             <div class="button__container">
