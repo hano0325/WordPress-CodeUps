@@ -2475,7 +2475,7 @@ main {
 
 .card-voice__block-subtext {
 	-webkit-box-orient: vertical;
-	-webkit-line-clamp: 7;
+	-webkit-line-clamp: 11;
 	color: #0D2936;
 	display: -webkit-box;
 	font-family: "Noto Sans JP";
@@ -2610,6 +2610,7 @@ main {
 	font-size: 1rem;
 	font-weight: 400;
 	line-height: 1.5;
+	margin-top: 1.5rem;
 }
 
 .card-lower-detail__entry li {
@@ -3096,6 +3097,7 @@ main {
 	border: 1px solid #408F95;
 	color: #408F95;
 	display: flex;
+	font-family: "Lato";
 	font-size: 1rem;
 	font-weight: 700;
 	height: 2.375rem;
@@ -3120,6 +3122,7 @@ main {
 	border-color: #408F95;
 	color: #fff;
 	display: flex;
+	font-family: "Lato";
 	font-size: 1rem;
 	font-weight: 700;
 	height: 2.375rem;
@@ -3677,7 +3680,16 @@ main {
 	text-align: center;
 }
 
+.wp-block-image img {
+	margin-top: 1.5rem;
+}
+
+.wp-block-list {
+	margin-top: 1.5rem;
+}
+
 .wp-block-list li {
+	color: #0D2936;
 	padding-left: 1.3125rem;
 	position: relative;
 }
@@ -4757,6 +4769,7 @@ html {
 }
 
 .card-voice__block-subtext {
+	-webkit-line-clamp: 8;
 	margin-top: 2.5rem;
 }
 
@@ -4776,6 +4789,10 @@ html {
 }
 
 .card-lower-detail__entry {
+	margin-top: 2.5rem;
+}
+
+.card-lower-detail__entry p {
 	margin-top: 2.5rem;
 }
 
@@ -5355,6 +5372,14 @@ html {
 
 .voice__button {
 	margin-top: 5rem;
+}
+
+.wp-block-image img {
+	margin-top: 2.5rem;
+}
+
+.wp-block-list {
+	margin-top: 2.5rem;
 }
 
 }
