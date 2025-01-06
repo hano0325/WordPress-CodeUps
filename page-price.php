@@ -18,10 +18,18 @@
 <main>
     <section class="price-lower price-lower-layout">
         <div class="price-lower__inner inner">
+            <?php
+                $args = [
+                    "post_type" => "fee",
+                ];
+                $the_query = new WP_Query($args);
+                ?>
             <?php if (have_posts()) : ?>
             <?php while (have_posts()) : the_post(); ?>
             <?php
-                $price_list = SCF::get('price_list'); ?>
+                $price_list = SCF::get('price_list');
+                var_dump($price_list); // ここで返り値を確認
+                ?>
             <?php if (!empty($price_list)) : ?>
             <?php foreach ($price_list as $price) : ?>
             <div class="price-lower__list list-price">
