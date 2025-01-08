@@ -10,6 +10,38 @@ jQuery(function ($) {
     }
   });
 });
+$('.menu__nav-item-main a[href], .menu__nav-item-sub a[href]').on('click', function (event) {
+  var link = $(this).attr('href'); // クリックされたリンクのURLを取得
+
+  // ヘッダーの高さ分だけコンテンツを下げる
+  $(function () {
+    var height = $(".js-header").height();
+    $("main").css("margin-top", height);
+  });
+  // ページ内スクロール
+  $(function () {
+    // ヘッダーの高さ取得
+    var headerHeight = $(".js-header").height();
+    $('a[href^="#"]').click(function () {
+      var speed = 600;
+      var href = $(this).attr("href");
+      var target = $(href == "#" || href == "" ? "html" : href);
+      // ヘッダーの高さ分下げる
+      var position = target.offset().top - headerHeight;
+      $("body,html").animate({
+        scrollTop: position
+      }, speed, "swing");
+      return false;
+    });
+
+    // メニューを閉じる
+    $('.js-hamburger').removeClass('is-active'); // ハンバーガーボタンの状態をリセット
+    $('.js-drawer').removeClass('is-active'); // メニューを非表示状態にする
+
+    // メニューコンテナを非表示に設定
+    $('.js-drawer').css('display', 'none');
+  });
+});
 
 // resizeイベント
 $(window).resize(function () {
@@ -292,6 +324,16 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       });
     });
+  });
+});
+$(document).ready(function () {
+  // クリックイベントでトグル
+  $('.faq-list__item-question').on('click', function () {
+    $(this).next().slideToggle();
+    $(this).toggleClass('is-active');
+    if (!$(this).hasClass('is-active')) {
+      $(this).next().css('display', 'none');
+    }
   });
 });
 

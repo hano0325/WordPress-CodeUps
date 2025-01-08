@@ -54,8 +54,8 @@
                             ];
                             $the_query = new WP_Query($args);
                             ?>
-                        <?php if (have_posts()) : ?>
-                        <?php while (have_posts()) : the_post(); ?>
+                        <?php if ($the_query->have_posts()) : // $the_queryに対してhave_postsをチェック ?>
+                        <?php while ($the_query->have_posts()) : $the_query->the_post(); ?>
                         <?php
                             $campaign_archives = SCF::get('campaign_archives'); ?>
                         <?php if (!empty($campaign_archives)) : ?>

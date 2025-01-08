@@ -3058,6 +3058,7 @@ main {
 	padding-right: 1.5625rem;
 	padding-top: 0.375rem;
 	text-align: center;
+	white-space: pre-line;
 	width: 100%;
 }
 
@@ -5066,7 +5067,6 @@ html {
 	padding-left: 5.125rem;
 	padding-right: 1rem;
 	padding-top: 1.125rem;
-	text-align: left;
 }
 
 .pagenavi__inner {

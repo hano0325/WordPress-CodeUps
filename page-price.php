@@ -21,18 +21,17 @@
             <?php
                 $args = [
                     "post_type" => "fee",
+                    "orderby" => "date", // 日付順
+                    "order" => "ASC", // 昇順
                 ];
                 $the_query = new WP_Query($args);
                 ?>
-            <?php if (have_posts()) : ?>
-            <?php while (have_posts()) : the_post(); ?>
+            <?php if ($the_query->have_posts()) : ?>
+            <?php while ($the_query->have_posts()) : $the_query->the_post(); ?>
             <?php
-                $price_list = SCF::get('price_list');
-                var_dump($price_list); // ここで返り値を確認
+                $section_id = sanitize_title(get_the_title());
                 ?>
-            <?php if (!empty($price_list)) : ?>
-            <?php foreach ($price_list as $price) : ?>
-            <div class="price-lower__list list-price">
+            <div class="price-lower__list list-price" id="<?php echo esc_attr($section_id); ?>">
                 <div class="list-price__container">
                     <picture>
                         <source
@@ -44,19 +43,24 @@
                     <p class="list-price__title"><?php echo get_the_title(); ?></p>
                 </div>
                 <table class="list-price__table">
+                    <?php
+                        $price_list = SCF::get('price_list');
+                        ?>
+                    <?php if (!empty($price_list)) : ?>
+                    <?php foreach ($price_list as $price) : ?>
                     <tbody>
                         <tr class="list-price__item">
                             <td class="list-price__date"><?php echo nl2br(esc_html($price['course_name'])); ?></td>
-                            <td class="list-price__price">¥
-                                <?php echo esc_html($price['course_price']); ?></td>
+                            <td class="list-price__price">¥<?php echo esc_html($price['course_price']); ?></td>
                         </tr>
                     </tbody>
+                    <?php endforeach; ?>
+                    <?php endif; ?>
                 </table>
             </div>
-            <?php endforeach; ?>
-            <?php endif; ?>
             <?php endwhile; ?>
             <?php endif; ?>
         </div>
     </section>
+
     <?php get_footer(); ?>

@@ -151,17 +151,31 @@ $site = esc_url( home_url( '/site/' ) );
                         </ul>
                         <ul class="menu__nav-item">
                             <li class="menu__nav-item-main">
-                                <a href="<?php echo $price; ?>">料金一覧</a>
+                                <a href="<?php echo esc_url($price); ?>">料金一覧</a>
                             </li>
+                            <?php
+                                // `fee`投稿タイプから料金タイトルを取得
+                                $args = [
+                                    "post_type" => "fee",
+                                    "orderby" => "date",
+                                    "order" => "ASC",
+                                    "posts_per_page" => -1, // 全件取得
+                                ];
+                                $footer_query = new WP_Query($args);
+                                ?>
+                            <?php if ($footer_query->have_posts()) : ?>
+                            <?php while ($footer_query->have_posts()) : $footer_query->the_post(); ?>
+                            <?php
+                                $section_id = sanitize_title(get_the_title());
+                                ?>
                             <li class="menu__nav-item-sub">
-                                <a href="<?php echo $price; ?>#license">ライセンス講習</a>
+                                <a href="<?php echo esc_url($price . '#' . $section_id); ?>">
+                                    <?php echo esc_html(get_the_title()); ?>
+                                </a>
                             </li>
-                            <li class="menu__nav-item-sub">
-                                <a href="<?php echo $price; ?>#experience">体験ダイビング</a>
-                            </li>
-                            <li class="menu__nav-item-sub">
-                                <a href="<?php echo $price; ?>#fun">ファンダイビング</a>
-                            </li>
+                            <?php endwhile; ?>
+                            <?php wp_reset_postdata(); ?>
+                            <?php endif; ?>
                         </ul>
                     </div>
                     <div class="menu__nav-content">
