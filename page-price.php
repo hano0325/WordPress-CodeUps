@@ -54,13 +54,14 @@
                                 <?php
                             $course_name = esc_html($price['course_name']);
                             if (wp_is_mobile()) {
-                                echo nl2br(preg_replace('/\s+/', "\n", $course_name));
+                                echo nl2br(preg_replace('/\s+/', "<br class=\"u-mobile\">", $course_name));
                             } else {
                                 echo $course_name;
                             }
                             ?>
                             </td>
-                            <td class="list-price__price">¥<?php echo esc_html($price['course_price']); ?></td>
+                            <td class="list-price__price">¥<?php echo esc_html($price['course_price']); ?>
+                            </td>
                         </tr>
                     </tbody>
                     <?php endforeach; ?>

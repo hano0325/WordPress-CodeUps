@@ -323,3 +323,39 @@ function display_popular_posts_shortcode($atts) {
     return ob_get_clean(); // バッファの内容を返す
 }
 add_shortcode('popular_posts', 'display_popular_posts_shortcode'); // ショートコードを追加
+
+function dynamic_campaign_select($tag)
+{
+// フィールド名が 'campaign-select' の場合に処理
+if ($tag['name'] != 'campaign-select') {
+return $tag;
+}
+// カスタム投稿 'campaign' の取得
+$args = array(
+    'post_type'      => 'campaign',
+    'posts_per_page' => -1,
+    'orderby'        => 'ID',
+    'order'          => 'ASC',
+);
+$campaign_posts = get_posts($args);
+
+// 初期値の設定
+$tag['raw_values'][] = 'キャンペーン内容を選択'; // 初期のプレースホルダー
+
+// 投稿が存在する場合に選択肢を追加
+if (!empty($campaign_posts)) {
+    foreach ($campaign_posts as $post) {
+        $tag['raw_values'][] = $post->post_title; // 値
+    }
+}
+
+return $tag;
+}
+add_filter('wpcf7_form_tag', 'dynamic_campaign_select', 10, 1);
+
+add_filter('wpcf7_form_elements', function ($content) {
+    // <p>タグを削除
+    $content = preg_replace('/<p>/', '', $content);
+    $content = preg_replace('/<\/p>/', '', $content);
+    return $content;
+});

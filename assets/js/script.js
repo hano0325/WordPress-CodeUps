@@ -329,10 +329,13 @@ document.addEventListener("DOMContentLoaded", function () {
 $(document).ready(function () {
   // クリックイベントでトグル
   $('.faq-list__item-question').on('click', function () {
-    $(this).next().slideToggle();
-    $(this).toggleClass('is-active');
+    var $content = $(this).next();
     if (!$(this).hasClass('is-active')) {
-      $(this).next().css('display', 'none');
+      $content.stop().slideDown(300); // 0.3秒で表示
+      $(this).addClass('is-active');
+    } else {
+      $content.stop().slideUp(300); // 0.3秒で隠す
+      $(this).removeClass('is-active');
     }
   });
 });

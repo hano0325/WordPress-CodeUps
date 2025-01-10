@@ -926,9 +926,10 @@ a {
 	line-height: 1.4375;
 	padding-bottom: 1rem;
 	padding-left: 1rem;
-	padding-right: 1rem;
+	padding-right: 3rem;
 	padding-top: 1rem;
 	position: relative;
+	transition: all 0.3s;
 }
 
 .faq-list__item-question::before,
@@ -937,8 +938,8 @@ a {
 	content: "";
 	height: 0.0625rem;
 	position: absolute;
-	right: 1rem;
-	top: 1.6rem;
+	right: 4%;
+	top: 45%;
 	transition: all 0.3s;
 	width: 2rem;
 }
@@ -1009,8 +1010,12 @@ a {
 	padding-bottom: 1.5rem;
 }
 
-.form__wrap:not(:first-child) {
-	margin-top: 1.25rem;
+.form__wrap:first-child {
+	margin: 0;
+}
+
+.form__wrap:not(:first-of-type) {
+	margin-top: 1.2rem;
 }
 
 .form__label {
@@ -1027,17 +1032,19 @@ a {
 	color: #fff;
 	display: inline-block;
 	font-size: 0.75rem;
+	font-weight: 400;
+	letter-spacing: 0.4em;
 	line-height: 1.4166;
 	margin-left: 0.5rem;
 	padding-bottom: 0.125rem;
-	padding-left: 1.125rem;
-	padding-right: 1.125rem;
+	padding-left: 0.875rem;
+	padding-right: 0.875rem;
 	padding-top: 0.125rem;
 }
 
 .form__input {
-	flex-grow: 1;
 	margin-top: 1rem;
+	width: 100%;
 }
 
 .form__input input {
@@ -1048,6 +1055,7 @@ a {
 	background-image: none;
 	border: 1px solid #408F95;
 	border-radius: 0;
+	flex-shrink: 1;
 	font-size: 1rem;
 	line-height: 1.4375;
 	padding-bottom: 0.5625rem;
@@ -4209,14 +4217,14 @@ html {
 	line-height: 1.45;
 	padding-bottom: 1.5625rem;
 	padding-left: 2.5rem;
-	padding-right: 2.5rem;
+	padding-right: 3.5rem;
 	padding-top: 1.5625rem;
 }
 
 .faq-list__item-question::before,
 .faq-list__item-question::after {
-	right: 1.5rem;
-	top: 2.5rem;
+	right: 4%;
+	top: 49%;
 }
 
 .faq-list__item-answer {
@@ -4253,16 +4261,21 @@ html {
 .form__wrap {
 	align-items: center;
 	display: flex;
-	padding-bottom: 2.8125rem;
+	padding-bottom: 2.5rem;
 }
 
-.form__wrap:not(:first-child) {
-	margin-top: 1.8rem;
+.form__wrap:first-child {
+	margin-top: 2.1875rem;
+}
+
+.form__wrap:not(:first-of-type) {
+	margin-top: 1.5rem;
 }
 
 .form__label {
+	flex-shrink: 0;
 	max-width: 30rem;
-	width: 31%;
+	width: 32%;
 }
 
 .form__input {
