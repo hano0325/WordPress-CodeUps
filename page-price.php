@@ -19,18 +19,18 @@
     <section class="price-lower price-lower-layout">
         <div class="price-lower__inner inner">
             <?php
-                $args = [
-                    "post_type" => "fee",
-                    "orderby" => "date", // 日付順
-                    "order" => "ASC", // 昇順
-                ];
-                $the_query = new WP_Query($args);
-                ?>
+        $args = [
+            "post_type" => "fee",
+            "orderby" => "date", // 日付順
+            "order" => "ASC", // 昇順
+        ];
+        $the_query = new WP_Query($args);
+        ?>
             <?php if ($the_query->have_posts()) : ?>
             <?php while ($the_query->have_posts()) : $the_query->the_post(); ?>
             <?php
-                $section_id = sanitize_title(get_the_title());
-                ?>
+        $section_id = sanitize_title(get_the_title());
+        ?>
             <div class="price-lower__list list-price" id="<?php echo esc_attr($section_id); ?>">
                 <div class="list-price__container">
                     <picture>
@@ -44,13 +44,22 @@
                 </div>
                 <table class="list-price__table">
                     <?php
-                        $price_list = SCF::get('price_list');
-                        ?>
+                $price_list = SCF::get('price_list');
+                ?>
                     <?php if (!empty($price_list)) : ?>
                     <?php foreach ($price_list as $price) : ?>
                     <tbody>
                         <tr class="list-price__item">
-                            <td class="list-price__date"><?php echo nl2br(esc_html($price['course_name'])); ?></td>
+                            <td class="list-price__date">
+                                <?php
+                            $course_name = esc_html($price['course_name']);
+                            if (wp_is_mobile()) {
+                                echo nl2br(preg_replace('/\s+/', "\n", $course_name));
+                            } else {
+                                echo $course_name;
+                            }
+                            ?>
+                            </td>
                             <td class="list-price__price">¥<?php echo esc_html($price['course_price']); ?></td>
                         </tr>
                     </tbody>
@@ -62,5 +71,8 @@
             <?php endif; ?>
         </div>
     </section>
+
+
+
 
     <?php get_footer(); ?>
