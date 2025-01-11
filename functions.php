@@ -324,34 +324,54 @@ function display_popular_posts_shortcode($atts) {
 }
 add_shortcode('popular_posts', 'display_popular_posts_shortcode'); // ショートコードを追加
 
-function dynamic_campaign_select($tag)
+
+
+// Contact Form 7 セレクトボックスの選択肢をカスタム投稿のタイトルから自動生成
+function job_selectlist($tag, $unused)
 {
-// フィールド名が 'campaign-select' の場合に処理
-if ($tag['name'] != 'campaign-select') {
-return $tag;
-}
-// カスタム投稿 'campaign' の取得
-$args = array(
-    'post_type'      => 'campaign',
-    'posts_per_page' => -1,
-    'orderby'        => 'ID',
-    'order'          => 'ASC',
-);
-$campaign_posts = get_posts($args);
-
-// 初期値の設定
-$tag['raw_values'][] = 'キャンペーン内容を選択'; // 初期のプレースホルダー
-
-// 投稿が存在する場合に選択肢を追加
-if (!empty($campaign_posts)) {
-    foreach ($campaign_posts as $post) {
-        $tag['raw_values'][] = $post->post_title; // 値
+    // セレクトボックスの名前が 'campaign-select' かどうか確認
+    if ($tag['name'] != 'campaign-select') {
+        return $tag;
     }
-}
 
-return $tag;
+    // URLパラメータからキャンペーンIDを取得
+    $selected_campaign = isset($_GET['campaign_id']) ? intval($_GET['campaign_id']) : null;
+
+    // カスタム投稿タイプ 'campaign' から投稿を取得
+    $args = array(
+        'numberposts' => -1,
+        'post_type'   => 'campaign',
+        'orderby'     => 'ID',
+        'order'       => 'ASC'
+    );
+
+    $job_posts = get_posts($args);
+
+    // セレクトボックスの初期値を設定
+    $tag['raw_values'] = [];
+    $tag['values'] = [];
+    $tag['labels'] = [];
+
+    $tag['raw_values'][] = 'キャンペーン内容を選択';
+    $tag['values'][] = '';
+    $tag['labels'][] = 'キャンペーン内容を選択';
+
+    // 投稿が存在する場合、セレクトボックスに追加
+    foreach ($job_posts as $job_post) {
+        $tag['raw_values'][] = $job_post->post_title;
+        $tag['values'][] = $job_post->post_title;
+        $tag['labels'][] = $job_post->post_title;
+
+        // 選択されたキャンペーンが一致する場合にデフォルト値を設定
+        if ($selected_campaign && $job_post->ID === $selected_campaign) {
+            $tag['default'][] = $job_post->post_title;
+        }
+    }
+
+    return $tag;
 }
-add_filter('wpcf7_form_tag', 'dynamic_campaign_select', 10, 1);
+add_filter('wpcf7_form_tag', 'job_selectlist', 10, 2);
+
 
 add_filter('wpcf7_form_elements', function ($content) {
     // <p>タグを削除
@@ -359,3 +379,21 @@ add_filter('wpcf7_form_elements', function ($content) {
     $content = preg_replace('/<\/p>/', '', $content);
     return $content;
 });
+
+
+function cf7_redirect_to_thankyou($contact_form)
+{
+// フォームIDを指定（該当のCF7フォームIDを入力）
+$form_id = 123; // ここを使用しているフォームのIDに変更してください
+// 対象のフォームの場合のみ処理
+if ($contact_form->id() == $form_id) {
+    // サンクスページのURLを設定
+    $url = home_url('/thanks/'); // サンクスページのパスに変更
+
+    // JavaScriptでリダイレクトを設定
+    echo "<script>window.location.href = '$url';</script>";
+    exit;
+}
+
+}
+add_action('wpcf7_mail_sent', 'cf7_redirect_to_thankyou');

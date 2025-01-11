@@ -102,7 +102,13 @@
                                                 <?php echo esc_html($campaign['data_text']); // 補足テキスト ?>
                                             </p>
                                             <div class="tab__campaign-form-button">
-                                                <a href="<?php echo esc_url(home_url('contact')); ?>" class="button">
+                                                <?php
+                                                    // 現在の投稿IDを取得
+                                                    $campaign_id = get_the_ID();
+                                                    // ContactページのURLにクエリパラメータとしてIDを追加
+                                                    $contact_url = add_query_arg('campaign_id', $campaign_id, home_url('contact'));
+                                                    ?>
+                                                <a href="<?php echo esc_url($contact_url); ?>" class="button">
                                                     <div class="button__container">
                                                         <p>Contact us</p>
                                                         <img src="<?php echo get_template_directory_uri(); ?>/assets/images/common/Vector.png"
@@ -110,6 +116,7 @@
                                                     </div>
                                                 </a>
                                             </div>
+
                                         </div>
                                     </div>
                                 </div>

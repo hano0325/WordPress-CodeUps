@@ -1129,12 +1129,11 @@ a {
 
 .form__select {
 	border: 1px solid #408F95;
-	display: flex;
 	margin-top: 1rem;
-	padding-bottom: 0.6875rem;
+	padding-bottom: 0.5rem;
 	padding-left: 0.5rem;
 	padding-right: 0.5rem;
-	padding-top: 0.6875rem;
+	padding-top: 0.5rem;
 }
 
 .form__select select {
@@ -1240,19 +1239,36 @@ a {
 	border: solid 1px #408F95;
 	cursor: pointer;
 	font-family: "Gotu";
-	font-size: 0.875rem;
 	font-weight: 400;
 	line-height: 1.57142;
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: 1.5rem;
-	padding: 0.875rem 1.875rem;
 	position: relative;
 	width: 12.625rem;
 }
 
 .form__submit-button input {
 	color: #fff;
+}
+
+.form__submit-container {
+	position: relative;
+}
+
+.form__submit-container::after {
+	content: url(../images/common/Vector.svg);
+	position: absolute;
+	right: 3.7rem;
+	top: 22%;
+	width: 2.5rem;
+}
+
+.form__submit-container:hover::after {
+	content: url(../images/common/Vector-green.svg);
+	position: absolute;
+	width: 2.5rem;
+	z-index: 2;
 }
 
 .form__submit-button::before {
@@ -1300,6 +1316,61 @@ a {
 	position: relative;
 	width: 2.5rem;
 	z-index: 2;
+}
+
+.form-radio label {
+	display: block;
+}
+
+.form-radio label:not(:first-of-type) {
+	margin-top: prem(10);
+}
+
+.form-radio input {
+	display: none;
+}
+
+.form-radio input + span {
+	cursor: pointer;
+	display: block;
+	font-size: prem(15);
+	line-height: 1;
+	padding: 0 0 0 prem(25);
+	position: relative;
+}
+
+.form-radio input + span::before {
+	background: #fff;
+	border: 1px solid #ccc;
+	border-radius: 50%;
+	content: "";
+	display: block;
+	height: prem(15);
+	left: 0;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	width: prem(15);
+}
+
+.form-radio input + span::after {
+	background: #000;
+	border: 1px solid transparent;
+	border-radius: 50%;
+	content: "";
+	height: prem(7);
+	left: prem(4);
+	opacity: 0;
+	padding: prem(2);
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	transition: 0.3s;
+	width: prem(7);
+}
+
+.form-radio input:checked + span::after {
+	opacity: 1;
 }
 
 .gallery-layout {
@@ -2309,6 +2380,10 @@ main {
 	justify-content: center;
 }
 
+.button__container-form {
+	position: relative;
+}
+
 .button__container img {
 	margin-left: 0.5rem;
 	padding-bottom: 0.3125rem;
@@ -2963,6 +3038,22 @@ main {
 	top: 49%;
 	transform: translateY(0px) rotate(-37deg);
 	width: 2.5625rem;
+}
+
+input[type=submit] {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	border: none;
+	color: #fff;
+	cursor: pointer;
+	font-size: 0.875rem;
+	height: 100%;
+	padding-bottom: 1rem;
+	padding-left: 3.375rem;
+	padding-right: 7rem;
+	padding-top: 1rem;
+	width: 100%;
 }
 
 .license__container {
@@ -3713,6 +3804,21 @@ main {
 	overflow: hidden;
 }
 
+.wpcf7-form-control.wpcf7-checkbox {
+	display: flex;
+	flex-direction: column;
+}
+
+.wpcf7-list-item {
+	margin-left: 0;
+}
+
+.wpcf7-spinner {
+	display: none;
+	margin-left: 0;
+	margin-right: 0;
+}
+
 @media screen and (min-width: 768px) {
 
 .u-desktop {
@@ -4259,9 +4365,8 @@ html {
 }
 
 .form__wrap {
-	align-items: center;
 	display: flex;
-	padding-bottom: 2.5rem;
+	padding-bottom: 2.2rem;
 }
 
 .form__wrap:first-child {
@@ -4269,7 +4374,12 @@ html {
 }
 
 .form__wrap:not(:first-of-type) {
-	margin-top: 1.5rem;
+	margin-top: 2rem;
+}
+
+.form__wrap:nth-of-type(5) {
+	align-items: center;
+	display: flex;
 }
 
 .form__label {
@@ -4315,7 +4425,20 @@ html {
 }
 
 .form__submit-button {
-	margin-top: 1.875rem;
+	margin-top: 2.5rem;
+}
+
+.form-radio label {
+	display: inline-block;
+}
+
+.form-radio label:not(:first-of-type) {
+	margin-left: prem(30);
+	margin-top: 0;
+}
+
+.form-radio input + span {
+	display: inline-block;
 }
 
 .gallery-layout {
@@ -4467,14 +4590,14 @@ html {
 }
 
 .inquiry-layout {
-	margin-top: 9.375rem;
+	margin-top: 13rem;
 }
 
 .inquiry-layout::before {
 	display: inline-block;
 	height: 8.625rem;
 	left: calc(50% - min(48vw, 39rem));
-	top: -4.625rem;
+	top: -7.625rem;
 	width: 18.8125rem;
 }
 
