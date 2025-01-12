@@ -373,27 +373,42 @@ function job_selectlist($tag, $unused)
 add_filter('wpcf7_form_tag', 'job_selectlist', 10, 2);
 
 
-add_filter('wpcf7_form_elements', function ($content) {
-    // <p>タグを削除
-    $content = preg_replace('/<p>/', '', $content);
-    $content = preg_replace('/<\/p>/', '', $content);
-    return $content;
-});
-
-
-function cf7_redirect_to_thankyou($contact_form)
-{
-// フォームIDを指定（該当のCF7フォームIDを入力）
-$form_id = 123; // ここを使用しているフォームのIDに変更してください
-// 対象のフォームの場合のみ処理
-if ($contact_form->id() == $form_id) {
-    // サンクスページのURLを設定
-    $url = home_url('/thanks/'); // サンクスページのパスに変更
-
-    // JavaScriptでリダイレクトを設定
-    echo "<script>window.location.href = '$url';</script>";
-    exit;
-}
-
-}
-add_action('wpcf7_mail_sent', 'cf7_redirect_to_thankyou');
+// add_filter('wpcf7_form_elements', function ($content) {
+//     // <p>タグを削除
+//     $content = preg_replace('/<p>/', '', $content);
+//     $content = preg_replace('/<\/p>/', '', $content);
+//     return $content;
+// });
+// document.addEventListener('DOMContentLoaded', function () {
+//     // フォーム送信時のエラー処理
+//     document.addEventListener('wpcf7-not-valid', function (event) {
+//       const form = event.target;
+  
+//       // すべての個別エラーメッセージを非表示にする
+//       form.querySelectorAll('.wpcf7-not-valid-tip').forEach(function (errorTip) {
+//         errorTip.style.display = 'none';
+//       });
+  
+//       // フォーム全体の上にエラーメッセージを表示
+//       let errorMessage = form.querySelector('.wpcf7-form-error-message');
+//       if (!errorMessage) {
+//         errorMessage = document.createElement('div');
+//         errorMessage.classList.add('wpcf7-form-error-message');
+//         errorMessage.textContent = '※必須項目が入力されていません。入力してください。';
+//         form.prepend(errorMessage); // フォームの上部に追加
+//       }
+//       errorMessage.style.display = 'block';
+//     });
+  
+//     // 入力中にエラースタイルをリセット
+//     document.addEventListener('input', function (event) {
+//       const form = event.target.closest('.wpcf7-not-valid');
+//       if (form) {
+//         const errorMessage = form.querySelector('.wpcf7-form-error-message');
+//         if (errorMessage) {
+//           errorMessage.style.display = 'none';
+//         }
+//       }
+//     });
+//   });
+  

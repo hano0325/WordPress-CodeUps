@@ -9,7 +9,7 @@ $price = esc_url( home_url( '/price/' ) );
 $faq = esc_url( home_url( '/faq/' ) );
 $contact = esc_url( home_url( '/contact/' ) );
 $privacy = esc_url( home_url( '/privacy/' ) );
-$terms = esc_url( home_url( '/terms/' ) );
+$service = esc_url( home_url( '/service/' ) );
 $site = esc_url( home_url( '/site/' ) );
 ?>
 <?php get_header(); ?>

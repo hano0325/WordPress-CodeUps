@@ -2158,24 +2158,34 @@ main {
 	z-index: -100;
 }
 
-.thanks-page__text {
-	color: #0D2936;
-	font-family: "Noto Sans JP";
-	font-size: 1rem;
-	font-weight: 400;
-	text-align: center;
-}
-
-.thanks-page__text-sub {
-	margin-top: 2rem;
-}
-
 .thanks-page__inner {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	max-width: 37.5rem;
 	padding: 0 0.9375rem;
+}
+
+.thanks-page__text {
+	text-align: center;
+}
+
+.thanks-page__text h2,
+.thanks-page__text p {
+	color: #0D2936;
+	font-family: "Noto Sans JP";
+	font-size: 1rem;
+	font-weight: 400;
+}
+
+.thanks-page__text h2 {
+	line-height: 1.125;
+}
+
+.thanks-page__text p {
+	line-height: 1.375;
+	margin-top: 2.5rem;
+	width: 21.5625rem;
 }
 
 .voice-layout {
@@ -3809,8 +3819,33 @@ input[type=submit] {
 	flex-direction: column;
 }
 
+.wpcf7-form-control.wpcf7-text.wpcf7-validates-as-required.wpcf7-not-valid,
+.wpcf7-form-control.wpcf7-textarea.wpcf7-validates-as-required.wpcf7-not-valid {
+	background-color: rgba(255, 0, 0, 0.2);
+	border: 1px solid #C94800;
+	color: #fff;
+}
+
 .wpcf7-list-item {
 	margin-left: 0;
+}
+
+.wpcf7-not-valid-tip {
+	color: #C94800;
+	font-family: "Noto Sans JP";
+	font-size: 0.875rem;
+	font-weight: 400;
+	left: 50%;
+	line-height: 1.642;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%) translateX(-50%);
+	width: 100%;
+}
+
+.wpcf7-not-valid {
+	background-color: rgba(255, 0, 0, 0.2);
+	border: 1px solid #C94800;
 }
 
 .wpcf7-spinner {
@@ -4828,6 +4863,14 @@ html {
 .thanks-page__inner {
 	max-width: 46.875rem;
 	padding: 0 1.5625rem;
+}
+
+.thanks-page__text h2 {
+	width: 100%;
+}
+
+.thanks-page__text p {
+	width: 100%;
 }
 
 .voice-layout {
