@@ -13,7 +13,7 @@ $service = esc_url( home_url( '/service/' ) );
 $site = esc_url( home_url( '/site/' ) );
 ?>
 
-<?php if (!is_page(array('contact', 'thanks', 'error'))): ?>
+<?php if (!is_page(array('contact', 'thanks')) && !is_404()): ?>
 <section class="contact contact-layout">
     <div class="contact__inner inner">
         <div class="contact__card">
@@ -67,7 +67,7 @@ $site = esc_url( home_url( '/site/' ) );
 <?php endif; ?>
 <div class="cycle-button js-page-top"></div>
 </main>
-<footer class="footer footer-layout">
+<footer class="footer<?php if (is_404()): ?> footer-404--mt0<?php endif; ?> footer-layout">
     <div class="footer__nav-inner inner">
         <div class="footer__nav-container">
             <div class="footer__logo-container">
@@ -213,6 +213,7 @@ $site = esc_url( home_url( '/site/' ) );
         </p>
     </div>
 </footer>
+
 <?php wp_footer(); ?>
 </body>
 

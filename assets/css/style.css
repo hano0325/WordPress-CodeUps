@@ -855,8 +855,8 @@ a {
 
 .error {
 	background-color: #408F95;
-	padding-bottom: 6.5rem;
-	padding-top: 5.25rem;
+	padding-bottom: 2.25rem;
+	padding-top: 2.5rem;
 	position: relative;
 }
 
@@ -879,6 +879,11 @@ a {
 .error__breadcrumb-container {
 	display: block;
 	text-align: left;
+}
+
+.error__breadcrumb,
+.error__breadcrumb name {
+	color: #fff;
 }
 
 .error__text-container {
@@ -2094,6 +2099,25 @@ main {
 	margin-top: 1.375rem;
 }
 
+.sentence__items p {
+	margin-top: 1.25rem;
+}
+
+.sentence__items ol {
+	counter-reset: number;
+	padding-left: 1.3rem;
+	text-indent: -0.9375rem;
+}
+
+.sentence__items ol:first-of-type {
+	margin-top: 1.25rem;
+}
+
+.sentence__items ol li::before {
+	content: counter(number) ". ";
+	counter-increment: number;
+}
+
 .sentence__item {
 	margin-top: 1.25rem;
 }
@@ -2693,16 +2717,20 @@ main {
 	width: 100%;
 }
 
-.card-lower-detail__entry {
-	margin-top: 1.5rem;
-}
-
 .card-lower-detail__entry p {
 	color: #0D2936;
 	font-family: "Noto Sans JP";
 	font-size: 1rem;
 	font-weight: 400;
 	line-height: 1.5;
+	margin-top: 1.5rem;
+}
+
+.card-lower-detail__entry {
+	margin-top: 1.5rem;
+}
+
+.card-lower-detail__entry ul {
 	margin-top: 1.5rem;
 }
 
@@ -2724,6 +2752,20 @@ main {
 	font-size: 0.875rem;
 	font-weight: 400;
 	line-height: 1.826;
+}
+
+.card-lower-detail__contents li {
+	content: url(../images/common/hitode-blue.svg);
+	left: -0.015625rem;
+	position: absolute;
+	top: 0.125rem;
+}
+
+.card-lower-detail__contents li::before {
+	content: url(../images/common/hitode-blue.svg);
+	left: -0.015625rem;
+	position: absolute;
+	top: 0.125rem;
 }
 
 .cards {
@@ -2951,9 +2993,23 @@ main {
 	text-align: center;
 }
 
+.error-form {
+	position: relative;
+}
+
+.error-message {
+	color: #C94800;
+	display: none;
+	position: absolute;
+}
+
 .footer {
 	background-color: #408F95;
 	padding-bottom: 3.4375rem;
+}
+
+.footer-404--mt0 {
+	margin-top: 0;
 }
 
 .footer__logo {
@@ -3793,23 +3849,6 @@ input[type=submit] {
 	margin-top: 1.5rem;
 }
 
-.wp-block-list {
-	margin-top: 1.5rem;
-}
-
-.wp-block-list li {
-	color: #0D2936;
-	padding-left: 1.3125rem;
-	position: relative;
-}
-
-.wp-block-list li::before {
-	content: url(../images/common/hitode-blue.svg);
-	left: -0.015625rem;
-	position: absolute;
-	top: 0.125rem;
-}
-
 .wp-block-image {
 	overflow: hidden;
 }
@@ -3830,8 +3869,9 @@ input[type=submit] {
 	margin-left: 0;
 }
 
-.wpcf7-not-valid-tip {
+.wpcf7-not-valid-tip span {
 	color: #C94800;
+	display: none;
 	font-family: "Noto Sans JP";
 	font-size: 0.875rem;
 	font-weight: 400;
@@ -4321,8 +4361,8 @@ html {
 }
 
 .error {
-	padding-bottom: 15rem;
-	padding-top: 6.25rem;
+	padding-bottom: 8rem;
+	padding-top: 4.25rem;
 }
 
 .error::before {
@@ -4834,6 +4874,10 @@ html {
 	margin-top: 1rem;
 }
 
+.sentence__items ol:first-of-type {
+	margin-top: 2.25rem;
+}
+
 .sentence__description:first-of-type {
 	margin-top: 1rem;
 }
@@ -4967,11 +5011,15 @@ html {
 	margin-top: 2.5rem;
 }
 
+.card-lower-detail__entry p {
+	margin-top: 2.5rem;
+}
+
 .card-lower-detail__entry {
 	margin-top: 2.5rem;
 }
 
-.card-lower-detail__entry p {
+.card-lower-detail__entry ul {
 	margin-top: 2.5rem;
 }
 
@@ -5143,6 +5191,10 @@ html {
 
 .footer {
 	padding-bottom: 5rem;
+}
+
+.footer-404--mt0 {
+	margin-top: 0;
 }
 
 .footer__nav-container {
@@ -5553,10 +5605,6 @@ html {
 }
 
 .wp-block-image img {
-	margin-top: 2.5rem;
-}
-
-.wp-block-list {
 	margin-top: 2.5rem;
 }
 

@@ -373,42 +373,8 @@ function job_selectlist($tag, $unused)
 add_filter('wpcf7_form_tag', 'job_selectlist', 10, 2);
 
 
-// add_filter('wpcf7_form_elements', function ($content) {
-//     // <p>タグを削除
-//     $content = preg_replace('/<p>/', '', $content);
-//     $content = preg_replace('/<\/p>/', '', $content);
-//     return $content;
-// });
-// document.addEventListener('DOMContentLoaded', function () {
-//     // フォーム送信時のエラー処理
-//     document.addEventListener('wpcf7-not-valid', function (event) {
-//       const form = event.target;
-  
-//       // すべての個別エラーメッセージを非表示にする
-//       form.querySelectorAll('.wpcf7-not-valid-tip').forEach(function (errorTip) {
-//         errorTip.style.display = 'none';
-//       });
-  
-//       // フォーム全体の上にエラーメッセージを表示
-//       let errorMessage = form.querySelector('.wpcf7-form-error-message');
-//       if (!errorMessage) {
-//         errorMessage = document.createElement('div');
-//         errorMessage.classList.add('wpcf7-form-error-message');
-//         errorMessage.textContent = '※必須項目が入力されていません。入力してください。';
-//         form.prepend(errorMessage); // フォームの上部に追加
-//       }
-//       errorMessage.style.display = 'block';
-//     });
-  
-//     // 入力中にエラースタイルをリセット
-//     document.addEventListener('input', function (event) {
-//       const form = event.target.closest('.wpcf7-not-valid');
-//       if (form) {
-//         const errorMessage = form.querySelector('.wpcf7-form-error-message');
-//         if (errorMessage) {
-//           errorMessage.style.display = 'none';
-//         }
-//       }
-//     });
-//   });
-  
+// Contact Form 7の自動pタグ無効
+add_filter('wpcf7_autop_or_not', 'wpcf7_autop_return_false');
+function wpcf7_autop_return_false() {
+  return false;
+}

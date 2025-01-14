@@ -80,7 +80,7 @@
                             </div>
                             <ul class="blog-lower-slideber__article-cards cards-article">
                                 <?php if (!is_user_logged_in() && !is_bot()) { 
-                                setPostViews(get_the_ID()); 
+                                setPostViews(get_the_ID());
                                 } ?>
                                 <?php
                                 $popular_args = array(

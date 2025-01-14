@@ -5,6 +5,7 @@
     <meta charset="<?php bloginfo( 'charset' ); ?>" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <meta name="format-detection" content="telephone=no" />
+    <meta name="google-site-verification" content="zh9Z_2dirLeMbHCXHbXISJ7jZzmpVpwteKe6UC6qtW8" />
     <?php wp_head(); ?>
 </head>
 
@@ -108,13 +109,13 @@ $site = esc_url( home_url( '/site/' ) );
                                         <a href="<?php echo $information; ?>">ダイビング情報</a>
                                     </li>
                                     <li class="menu__nav-item-sub">
-                                        <a href="<?php echo $home; ?>?tab=tab01">ライセンス講習</a>
+                                        <a href="<?php echo $information; ?>?tab=tab01">ライセンス講習</a>
                                     </li>
                                     <li class="menu__nav-item-sub">
-                                        <a href="<?php echo $home; ?>?tab=tab03">体験ダイビング</a>
+                                        <a href="<?php echo $information; ?>?tab=tab03">体験ダイビング</a>
                                     </li>
                                     <li class="menu__nav-item-sub">
-                                        <a href="<?php echo $home; ?>?tab=tab02">ファンダイビング</a>
+                                        <a href="<?php echo $information; ?>?tab=tab02">ファンダイビング</a>
                                     </li>
                                 </ul>
                                 <ul class="menu__nav-item">

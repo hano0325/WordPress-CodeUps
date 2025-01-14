@@ -287,16 +287,20 @@ document.addEventListener("DOMContentLoaded", function () {
   var tabs = document.querySelectorAll(".information-lower__tab-button");
   var contents = document.querySelectorAll(".information-lower__contents-content");
 
-  // 初期表示: data-number="tab01" をアクティブに
+  // URLパラメータからタブIDを取得
+  var urlParams = new URLSearchParams(window.location.search);
+  var initialTab = urlParams.get("tab") || "tab01"; // パラメータがない場合は "tab01"
+
+  // 初期表示: URLパラメータに基づいて表示
   tabs.forEach(function (tab) {
-    if (tab.getAttribute("data-number") === "tab01") {
+    if (tab.getAttribute("data-number") === initialTab) {
       tab.classList.add("is-active");
     } else {
       tab.classList.remove("is-active");
     }
   });
   contents.forEach(function (content) {
-    if (content.id === "tab01") {
+    if (content.id === initialTab) {
       content.classList.add("is-active");
     } else {
       content.classList.remove("is-active");
@@ -311,7 +315,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // タブのアクティブ状態を更新
       tabs.forEach(function (t) {
-        return t.classList.remove("is-active");
+        t.classList.remove("is-active");
       });
       this.classList.add("is-active");
 
@@ -323,6 +327,11 @@ document.addEventListener("DOMContentLoaded", function () {
           content.classList.remove("is-active");
         }
       });
+
+      // URLを更新（履歴に追加）
+      var newUrl = new URL(window.location);
+      newUrl.searchParams.set("tab", targetTab);
+      history.pushState(null, "", newUrl);
     });
   });
 });
