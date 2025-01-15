@@ -2997,10 +2997,27 @@ main {
 	position: relative;
 }
 
-.error-message {
-	color: #C94800;
+.error-form .wpcf7-not-valid-tip {
 	display: none;
+}
+
+.error-form .error-message {
+	display: none;
+}
+
+.error-form:has(.wpcf7-not-valid-tip) .error-message {
+	color: #C94800;
+	display: block;
+	font-family: "Noto Sans JP";
+	font-size: 0.875rem;
+	font-weight: 400;
+	left: 52%;
+	line-height: 1.429;
 	position: absolute;
+	text-indent: -1em;
+	top: -3%;
+	transform: translateY(-50%) translateX(-50%);
+	width: 61%;
 }
 
 .footer {
@@ -3865,11 +3882,15 @@ input[type=submit] {
 	color: #fff;
 }
 
+.wpcf7-form.invalid {
+	padding-top: 3.4rem;
+}
+
 .wpcf7-list-item {
 	margin-left: 0;
 }
 
-.wpcf7-not-valid-tip span {
+.wpcf7-not-valid-tip {
 	color: #C94800;
 	display: none;
 	font-family: "Noto Sans JP";
@@ -4665,7 +4686,7 @@ html {
 }
 
 .inquiry-layout {
-	margin-top: 13rem;
+	margin-top: 8.5625rem;
 }
 
 .inquiry-layout::before {
@@ -5189,6 +5210,11 @@ html {
 	width: 90%;
 }
 
+.error-form:has(.wpcf7-not-valid-tip) .error-message {
+	left: 58.4%;
+	top: 1.3%;
+}
+
 .footer {
 	padding-bottom: 5rem;
 }
@@ -5606,6 +5632,10 @@ html {
 
 .wp-block-image img {
 	margin-top: 2.5rem;
+}
+
+.wpcf7-form.invalid {
+	padding-top: 0.77rem;
 }
 
 }
