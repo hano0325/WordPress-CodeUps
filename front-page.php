@@ -51,18 +51,18 @@
                     <div class="campaign__swiper swiper js-campaign-swiper">
                         <div class="campaign__wrapper swiper-wrapper">
                             <?php
-            $args = [
-                "post_type" => "campaign",
-                "posts_per_page" => 4,
-                "orderby" => "date",
-                "order" => "DESC"
-            ];
-            $the_query = new WP_Query($args);
-            if ($the_query->have_posts()) :
-                while ($the_query->have_posts()) : $the_query->the_post();
-                    $campaign_archives = SCF::get('campaign_archives');
-                    if (!empty($campaign_archives)) :
-                        foreach ($campaign_archives as $campaign) : ?>
+                            $args = [
+                                "post_type" => "campaign",
+                                "posts_per_page" => 4,
+                                "orderby" => "date",
+                                "order" => "DESC"
+                            ];
+                            $the_query = new WP_Query($args);
+                            if ($the_query->have_posts()) :
+                            while ($the_query->have_posts()) : $the_query->the_post();
+                                $campaign_archives = SCF::get('campaign_archives');
+                            if (!empty($campaign_archives)) :
+                            foreach ($campaign_archives as $campaign) : ?>
                             <div class="campaign__slide swiper-slide">
                                 <img src="<?php echo esc_url(get_the_post_thumbnail_url() ?: get_template_directory_uri() . '/assets/images/common/cats.jpg'); ?>"
                                     alt="<?php the_title(); ?>" />
@@ -91,16 +91,16 @@
                                 </div>
                             </div>
                             <?php endforeach;
+                            endif;
+                        endwhile;
                     endif;
-                endwhile;
-            endif;
-            wp_reset_postdata();
-            ?>
+                    wp_reset_postdata();
+                    ?>
                         </div>
                     </div>
                 </div>
                 <div class="campaign__button">
-                    <a href="<?php echo esc_url($campaign_url); ?>" class=" button">
+                    <a href="<?php echo esc_url($campaign_url); ?>" class="button">
                         <div class="button__container">
                             <p>View more</p>
                             <img src="<?php echo get_template_directory_uri() ?>/assets/images/common/Vector.png"
@@ -225,9 +225,9 @@
                         </a>
                     </li>
                     <?php endwhile;
-          endif;
-          wp_reset_postdata();
-          ?>
+                    endif;
+                    wp_reset_postdata();
+                    ?>
                 </ul>
                 <div class="blog__button">
                     <a href="<?php echo $blog; ?>" class="button">
@@ -248,17 +248,17 @@
                 </div>
                 <ul class="voice__cards cards-voice">
                     <?php
-            $args = [
-            "post_type" => "voice",
-            "posts_per_page" => 2,
-            "orderby" => "date",
-            "order" => "DESC"
-            ];
-            $voice_query = new WP_Query($args);
-                if ($voice_query->have_posts()) :
-                while ($voice_query->have_posts()) : $voice_query->the_post();
-                $gender_age = SCF::get('gender_age');
-                if (!empty($gender_age)) :
+                    $args = [
+                    "post_type" => "voice",
+                    "posts_per_page" => 2,
+                    "orderby" => "date",
+                    "order" => "DESC"
+                    ];
+                    $voice_query = new WP_Query($args);
+                    if ($voice_query->have_posts()) :
+                    while ($voice_query->have_posts()) : $voice_query->the_post();
+                    $gender_age = SCF::get('gender_age');
+                    if (!empty($gender_age)) :
                     foreach ($gender_age as $voice) : ?>
                     <li class="cards-voice__card card-voice">
                         <div class="card-voice__container">
@@ -290,11 +290,11 @@
                         </div>
                     </li>
                     <?php endforeach;
-                endif;
-            endwhile;
-        endif;
-        wp_reset_postdata();
-        ?>
+                    endif;
+                    endwhile;
+                    endif;
+                    wp_reset_postdata();
+                    ?>
                 </ul>
                 <div class="voice__button">
                     <a href="<?php echo $voice_url; ?>" class="button">

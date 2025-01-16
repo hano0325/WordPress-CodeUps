@@ -62,33 +62,33 @@
                                 <div class="tab__campaign-container-text">
                                     <div class="tab__campaign-text-box">
                                         <p class="tab__campaign-text-box-maintitle">
-                                            <?php echo esc_html($campaign['main_tab']); // メインタブ ?>
+                                            <?php echo esc_html($campaign['main_tab']); ?>
                                         </p>
                                         <p class="tab__campaign-text-box-subtitle">
-                                            <?php echo esc_html($campaign['sub_title']); // サブタイトル ?>
+                                            <?php echo esc_html($campaign['sub_title']); ?>
                                         </p>
                                     </div>
                                     <div class="tab__campaign-money">
                                         <p class="tab__campaign-money-title">
-                                            <?php echo esc_html($campaign['money_title']); // 金額タイトル ?>
+                                            <?php echo esc_html($campaign['money_title']); ?>
                                         </p>
                                         <div class="tab__campaign-fee">
                                             <p class="tab__campaign-discount">
-                                                ¥<?php echo esc_html($campaign['discount_price']); // 割引価格 ?>
+                                                ¥<?php echo esc_html($campaign['discount_price']); ?>
                                             </p>
                                             <p class="tab__campaign-main">
-                                                ¥<?php echo esc_html($campaign['main_price']); // メイン価格 ?>
+                                                ¥<?php echo esc_html($campaign['main_price']); ?>
                                             </p>
                                         </div>
                                         <p class="tab__campaign-text-main u-desktop">
-                                            <?php echo nl2br(esc_html($campaign['main_text'])); // 詳細テキスト ?>
+                                            <?php echo nl2br(esc_html($campaign['main_text'])); ?>
                                         </p>
                                         <div class="tab__campaign-date-container u-desktop">
                                             <p class="tab__campaign-date-time">
-                                                <?php echo esc_html($campaign['data_time']); // 日付範囲 ?>
+                                                <?php echo esc_html($campaign['data_time']); ?>
                                             </p>
                                             <p class="tab__campaign-date-text">
-                                                <?php echo esc_html($campaign['data_text']); // 補足テキスト ?>
+                                                <?php echo esc_html($campaign['data_text']); ?>
                                             </p>
                                             <div class="tab__campaign-form-button">
                                                 <a href="<?php echo esc_url(home_url('contact')); ?>" class="button">

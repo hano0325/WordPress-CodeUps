@@ -92,7 +92,7 @@
                                             ?>
                                     <li class="menu__nav-item-sub">
                                         <a href="<?php echo esc_url(get_term_link($term)); ?>">
-                                            <?php echo esc_html($term->name); // タームの名前を表示 ?>
+                                            <?php echo esc_html($term->name); ?>
                                         </a>
                                     </li>
                                     <?php
@@ -132,7 +132,7 @@
                                 </ul>
                                 <ul class="menu__nav-item">
                                     <li class="menu__nav-item-main">
-                                        <a href="<?php echo esc_url($price); ?>">料金一覧</a>
+                                        <a href="<?php echo $price; ?>">料金一覧</a>
                                     </li>
                                     <?php
                                         $args = [

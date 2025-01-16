@@ -47,9 +47,7 @@
                         <?php endwhile; ?>
                         <?php endif; ?>
                     </ul>
-                    <div class="blog-lower__pagenavi pagenavi">
-                        <?php wp_pagenavi(); ?>
-                    </div>
+                    <?php get_template_part('breadcrumb'); ?>
                 </div>
                 <aside class="blog-lower-slideber blog-lower-slideber-layout">
                     <div class="blog-lower-slideber__inner">
@@ -67,21 +65,21 @@
                             </div>
                         </div>
                         <ul class="blog-lower-slideber__article-cards cards-article">
-                            <?php if (!is_user_logged_in() && !is_bot()) { 
-                                setPostViews(get_the_ID()); 
-                                } ?>
+                            <?php if (!is_user_logged_in() && !is_bot()) {
+                            setPostViews(get_the_ID());
+                            } ?>
                             <?php
                                 $popular_args = array(
-                                    'post_type' => 'post', // 投稿タイプを指定
-                                    'meta_key' => 'post_views_count', // 閲覧数を指定
-                                    'orderby' => 'meta_value_num', // ソートの基準を閲覧数に
-                                    'order' => 'DESC', // 降順（閲覧数が多い順）でソート
-                                    'post_status' => 'publish', // 投稿ステータスは公開済み
-                                    'posts_per_page' => 3, // 投稿表示件数は3件
+                                    'post_type' => 'post',
+                                    'meta_key' => 'post_views_count',
+                                    'orderby' => 'meta_value_num',
+                                    'order' => 'DESC',
+                                    'post_status' => 'publish',
+                                    'posts_per_page' => 3,
                                 );
-                                $popular_query = new WP_Query($popular_args);
-                                if ($popular_query->have_posts()): 
-                                ?>
+                            $popular_query = new WP_Query($popular_args);
+                            if ($popular_query->have_posts()):
+                            ?>
                             <ul class="cards-article">
                                 <?php while ($popular_query->have_posts()): $popular_query->the_post(); ?>
                                 <li class="cards-article__card card-article">
@@ -125,7 +123,7 @@
                             </div>
                             <div class="blog-lower-reviews__cards cards-reviews">
                                 <?php
-                                if (have_posts()): 
+                                if (have_posts()):
                                 while (have_posts()): the_post();
                                 $voice_cards = SCF::get('voice_cards');
                                 if (!empty($voice_cards)):

@@ -72,7 +72,7 @@ $site = esc_url( home_url( '/site/' ) );
         <div class="footer__nav-container">
             <div class="footer__logo-container">
                 <p class="footer__logo">
-                    <a href="#">
+                    <a href="<?php echo $home;?>">
                         <img src="<?php echo get_template_directory_uri() ?>/assets/images/common/CodeUps-logo-light.svg"
                             alt="Codeups" />
                     </a>

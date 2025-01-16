@@ -54,20 +54,15 @@
                 <?php if (!empty($gallery_images)) : ?>
                 <?php foreach ($gallery_images as $gallery) : ?>
                 <?php
-                    // PC画像のURL
                     $pc_image = wp_get_attachment_image_url($gallery['pc_image'], 'large');
-                    // SP画像のURL
                     $sp_image = wp_get_attachment_image_url($gallery['sp_image'], 'medium');
-                    // 代替テキスト
                     $alt_text = !empty($gallery['alt_text']) ? esc_attr($gallery['alt_text']) : '';
                     ?>
                 <li class="gallery-list__item">
                     <picture>
-                        <!-- PC画像の表示 -->
                         <?php if ($pc_image) : ?>
                         <source srcset="<?php echo esc_url($pc_image); ?>" media="(min-width: 768px)">
                         <?php endif; ?>
-                        <!-- SP画像の表示 -->
                         <?php if ($sp_image) : ?>
                         <img src="<?php echo esc_url($sp_image); ?>" alt="<?php echo $alt_text; ?>">
                         <?php endif; ?>

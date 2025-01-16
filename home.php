@@ -79,15 +79,15 @@
                                 } ?>
                             <?php
                                 $popular_args = array(
-                                    'post_type' => 'post', // 投稿タイプを指定
-                                    'meta_key' => 'post_views_count', // 閲覧数を指定
-                                    'orderby' => 'meta_value_num', // ソートの基準を閲覧数に
-                                    'order' => 'DESC', // 降順（閲覧数が多い順）でソート
-                                    'post_status' => 'publish', // 投稿ステータスは公開済み
-                                    'posts_per_page' => 3, // 投稿表示件数は3件
+                                    'post_type' => 'post',
+                                    'meta_key' => 'post_views_count',
+                                    'orderby' => 'meta_value_num',
+                                    'order' => 'DESC',
+                                    'post_status' => 'publish',
+                                    'posts_per_page' => 3,
                                 );
                                 $popular_query = new WP_Query($popular_args);
-                                if ($popular_query->have_posts()): 
+                                if ($popular_query->have_posts()):
                                 ?>
                             <ul class="cards-article">
                                 <?php while ($popular_query->have_posts()): $popular_query->the_post(); ?>
@@ -133,16 +133,14 @@
                             <div class="blog-lower-reviews__cards cards-reviews">
                                 <?php
                                     $args = array(
-                                        'post_type'      => 'voice', // 投稿タイプ
-                                        'posts_per_page' => 1,       // 最新の2件を取得
+                                        'post_type'      => 'voice',
+                                        'posts_per_page' => 1,
                                     );
                                     $query = new WP_Query($args);
-
                                     if ($query->have_posts()): ?>
                                 <ul class="cards-reviews">
                                     <?php while ($query->have_posts()): $query->the_post();
-                                    $gender_age = SCF::get('gender_age'); // カスタムフィールドを取得
-
+                                    $gender_age = SCF::get('gender_age');
                                     if (!empty($gender_age)):
                                     foreach ($gender_age as $voice): ?>
                                     <li class="cards-reviews__card card-reviews">
@@ -286,7 +284,6 @@
                                     <?php
                                         global $wpdb;
                                         $archives = $wpdb->get_results("SELECT DISTINCT YEAR(post_date) AS year, MONTH(post_date) AS month FROM $wpdb->posts WHERE post_status = 'publish' AND post_type = 'post' ORDER BY post_date DESC");
-
                                         $current_year = date('Y');
                                         $years = [];
                                         foreach ($archives as $archive) {

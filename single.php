@@ -293,7 +293,6 @@
                                         <?php
                                         global $wpdb;
                                         $archives = $wpdb->get_results("SELECT DISTINCT YEAR(post_date) AS year, MONTH(post_date) AS month FROM $wpdb->posts WHERE post_status = 'publish' AND post_type = 'post' ORDER BY post_date DESC");
-
                                         $current_year = date('Y');
                                         $years = [];
                                         foreach ($archives as $archive) {
