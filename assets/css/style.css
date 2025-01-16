@@ -4091,6 +4091,7 @@ html {
 }
 
 .campaign__button-container {
+	display: inline-block;
 	position: absolute;
 	right: 15%;
 	top: 2.625rem;

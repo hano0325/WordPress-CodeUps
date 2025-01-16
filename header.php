@@ -10,19 +10,19 @@
 </head>
 
 <?php
-$home = esc_url( home_url( '/' ) );
-$campaign = esc_url( home_url( '/campaign/' ) );
-$about = esc_url( home_url( '/about-us/' ) );
-$information = esc_url( home_url( '/information/' ) );
-$blog = esc_url( home_url( '/blog/' ) );
-$voice = esc_url( home_url( '/voice/' ) );
-$price = esc_url( home_url( '/price/' ) );
-$faq = esc_url( home_url( '/faq/' ) );
-$contact = esc_url( home_url( '/contact/' ) );
-$privacy = esc_url( home_url( '/privacy/' ) );
-$service = esc_url( home_url( '/service/' ) );
-$site = esc_url( home_url( '/site/' ) );
-?>
+    $home = esc_url( home_url( '/' ) );
+    $campaign = esc_url( home_url( '/campaign/' ) );
+    $about = esc_url( home_url( '/about-us/' ) );
+    $information = esc_url( home_url( '/information/' ) );
+    $blog = esc_url( home_url( '/blog/' ) );
+    $voice = esc_url( home_url( '/voice/' ) );
+    $price = esc_url( home_url( '/price/' ) );
+    $faq = esc_url( home_url( '/faq/' ) );
+    $contact = esc_url( home_url( '/contact/' ) );
+    $privacy = esc_url( home_url( '/privacy/' ) );
+    $service = esc_url( home_url( '/service/' ) );
+    $site = esc_url( home_url( '/site/' ) );
+    ?>
 
 <body <?php body_class(); ?>>
     <?php wp_body_open(); ?>
@@ -84,7 +84,7 @@ $site = esc_url( home_url( '/site/' ) );
                             <div class="menu__nav-container-first">
                                 <ul class="menu__nav-item">
                                     <li class="menu__nav-item-main">
-                                        <a href="<?php echo esc_url(home_url('campaign')); ?>">キャンペーン</a>
+                                        <a href="<?php echo $campaign; ?>">キャンペーン</a>
                                     </li>
                                     <?php
                                         $terms = get_terms('campaign_category');
