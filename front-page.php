@@ -92,10 +92,10 @@
                             </div>
                             <?php endforeach;
                             endif;
-                        endwhile;
-                    endif;
-                    wp_reset_postdata();
-                    ?>
+                            endwhile;
+                            endif;
+                            wp_reset_postdata();
+                            ?>
                         </div>
                     </div>
                 </div>

@@ -15,11 +15,10 @@
         </div>
     </div>
     <?php get_template_part('breadcrumb'); ?>
-    <div class="main">
+    <main>
         <div class="inquiry inquiry-layout">
             <div class="inquiry__inner">
                 <?php echo do_shortcode('[contact-form-7 id="9425c7d" title="お問い合わせフォーム"]'); ?>
             </div>
         </div>
-    </div>
-    <?php get_footer(); ?>
+        <?php get_footer(); ?>

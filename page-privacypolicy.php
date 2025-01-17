@@ -15,12 +15,13 @@
     </div>
 </div>
 <?php get_template_part('breadcrumb'); ?>
-<div class="sentence sentence-layout">
-    <div class="sentence__inner">
-        <h3 class="sentence__title"><?php echo the_title(); ?></h3>
-        <dl class="sentence__items">
-            <?php echo the_content(); ?>
-        </dl>
+<main>
+    <div class="sentence sentence-layout">
+        <div class="sentence__inner">
+            <h2 class="sentence__title"><?php echo the_title(); ?></h2>
+            <dl class="sentence__items">
+                <?php echo the_content(); ?>
+            </dl>
+        </div>
     </div>
-</div>
-<?php get_footer(); ?>
+    <?php get_footer(); ?>

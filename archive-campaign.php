@@ -19,16 +19,14 @@
     <section class="campaign-lower campaign-lower-layout">
         <div class="campaign-lower__inner">
             <div class="campaign-lower__tab tab">
-                <!-- タブボタン -->
                 <div class="tab__list">
                     <?php
-                        $is_archive_page = is_post_type_archive('campaign');
-                        $terms = get_terms(array(
-                            'taxonomy' => 'campaign_category',
-                            'hide_empty' => true,
-                        ));
-                        ?>
-                    <!-- "ALL" タブボタン -->
+                    $is_archive_page = is_post_type_archive('campaign');
+                    $terms = get_terms(array(
+                        'taxonomy' => 'campaign_category',
+                        'hide_empty' => true,
+                    ));
+                    ?>
                     <a class="tab__button <?php echo $is_archive_page ? 'is-active' : ''; ?>"
                         href="<?php echo esc_url(get_post_type_archive_link('campaign')); ?>">
                         ALL
@@ -43,17 +41,17 @@
                         <?php echo esc_html($term->name); ?>
                     </a>
                     <?php endforeach;
-                endif; ?>
+                    endif; ?>
                 </div>
                 <div class="tab__campaign-contents">
                     <ul class="tab__campaign-contents-content">
                         <?php
-                            $args = [
-                                "post_type" => "campaign",
-                                "posts_per_page" => 4
-                            ];
-                            $the_query = new WP_Query($args);
-                            ?>
+                        $args = [
+                            "post_type" => "campaign",
+                            "posts_per_page" => 4
+                        ];
+                        $the_query = new WP_Query($args);
+                        ?>
                         <?php if ($the_query->have_posts()) : // $the_queryに対してhave_postsをチェック ?>
                         <?php while ($the_query->have_posts()) : $the_query->the_post(); ?>
                         <?php
@@ -73,41 +71,39 @@
                                 <div class="tab__campaign-container-text">
                                     <div class="tab__campaign-text-box">
                                         <p class="tab__campaign-text-box-maintitle">
-                                            <?php echo esc_html($campaign['main_tab']); // メインタブ ?>
+                                            <?php echo esc_html($campaign['main_tab']); ?>
                                         </p>
                                         <p class="tab__campaign-text-box-subtitle">
-                                            <?php echo esc_html($campaign['sub_title']); // サブタイトル ?>
+                                            <?php echo esc_html($campaign['sub_title']); ?>
                                         </p>
                                     </div>
                                     <div class="tab__campaign-money">
                                         <p class="tab__campaign-money-title">
-                                            <?php echo esc_html($campaign['money_title']); // 金額タイトル ?>
+                                            <?php echo esc_html($campaign['money_title']); ?>
                                         </p>
                                         <div class="tab__campaign-fee">
                                             <p class="tab__campaign-discount">
-                                                ¥<?php echo esc_html($campaign['discount_price']); // 割引価格 ?>
+                                                ¥<?php echo esc_html($campaign['discount_price']); ?>
                                             </p>
                                             <p class="tab__campaign-main">
-                                                ¥<?php echo esc_html($campaign['main_price']); // メイン価格 ?>
+                                                ¥<?php echo esc_html($campaign['main_price']); ?>
                                             </p>
                                         </div>
                                         <p class="tab__campaign-text-main u-desktop">
-                                            <?php echo nl2br(esc_html($campaign['main_text'])); // 詳細テキスト ?>
+                                            <?php echo nl2br(esc_html($campaign['main_text'])); ?>
                                         </p>
                                         <div class="tab__campaign-date-container u-desktop">
                                             <p class="tab__campaign-date-time">
-                                                <?php echo esc_html($campaign['data_time']); // 日付範囲 ?>
+                                                <?php echo esc_html($campaign['data_time']); ?>
                                             </p>
                                             <p class="tab__campaign-date-text">
-                                                <?php echo esc_html($campaign['data_text']); // 補足テキスト ?>
+                                                <?php echo esc_html($campaign['data_text']); ?>
                                             </p>
                                             <div class="tab__campaign-form-button">
                                                 <?php
-                                                    // 現在の投稿IDを取得
-                                                    $campaign_id = get_the_ID();
-                                                    // ContactページのURLにクエリパラメータとしてIDを追加
-                                                    $contact_url = add_query_arg('campaign_id', $campaign_id, home_url('contact'));
-                                                    ?>
+                                                $campaign_id = get_the_ID();
+                                                $contact_url = add_query_arg('campaign_id', $campaign_id, home_url('contact'));
+                                                ?>
                                                 <a href="<?php echo esc_url($contact_url); ?>" class="button">
                                                     <div class="button__container">
                                                         <p>Contact us</p>
@@ -116,7 +112,6 @@
                                                     </div>
                                                 </a>
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>

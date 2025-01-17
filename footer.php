@@ -1,10 +1,10 @@
 <?php
 $home = esc_url( home_url( '/' ) );
-$campaign = esc_url( home_url( '/campaign/' ) );
+$campaign_url = esc_url( home_url( '/campaign/' ) );
 $about = esc_url( home_url( '/about/' ) );
 $information = esc_url( home_url( '/information/' ) );
 $blog = esc_url( home_url( '/blog/' ) );
-$voice = esc_url( home_url( '/voice/' ) );
+$voice_url = esc_url( home_url( '/voice/' ) );
 $price = esc_url( home_url( '/price/' ) );
 $faq = esc_url( home_url( '/faq/' ) );
 $contact = esc_url( home_url( '/contact/' ) );
@@ -99,7 +99,7 @@ $site = esc_url( home_url( '/site/' ) );
                     <div class="menu__nav-content">
                         <ul class="menu__nav-item">
                             <li class="menu__nav-item-main">
-                                <a href="<?php echo esc_url(home_url('campaign')); ?>">キャンペーン</a>
+                                <a href="<?php echo $campaign_url; ?>">キャンペーン</a>
                             </li>
                             <?php
                                 $terms = get_terms('campaign_category');
@@ -146,15 +146,14 @@ $site = esc_url( home_url( '/site/' ) );
                     <div class="menu__nav-content">
                         <ul class="menu__nav-item">
                             <li class="menu__nav-item-main">
-                                <a href="<?php echo $voice; ?>">お客様の声</a>
+                                <a href="<?php echo $voice_url; ?>">お客様の声</a>
                             </li>
                         </ul>
                         <ul class="menu__nav-item">
                             <li class="menu__nav-item-main">
-                                <a href="<?php echo esc_url($price); ?>">料金一覧</a>
+                                <a href="<?php echo $price; ?>">料金一覧</a>
                             </li>
                             <?php
-                                // `fee`投稿タイプから料金タイトルを取得
                                 $args = [
                                     "post_type" => "fee",
                                     "orderby" => "date",

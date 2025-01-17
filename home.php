@@ -23,10 +23,10 @@
                     <ul class="blog-lower__cards cards cards--blog">
                         <?php if (have_posts()) : ?>
                         <?php while (have_posts()) : the_post(); ?>
-                        <?php 
-                            $cats = get_the_category();
-                            if($cats):
-                                ?>
+                        <?php
+                        $cats = get_the_category();
+                        if($cats):
+                            ?>
                         <?php foreach($cats as $cat): ?>
                         <li class="cards__card card" data-year="<?php echo get_the_date('Y'); ?>"
                             data-month="<?php echo get_the_date('n'); ?>">
@@ -74,8 +74,8 @@
                             </div>
                         </div>
                         <ul class="blog-lower-slideber__article-cards cards-article">
-                            <?php if (!is_user_logged_in() && !is_bot()) { 
-                                setPostViews(get_the_ID()); 
+                            <?php if (!is_user_logged_in() && !is_bot()) {
+                                setPostViews(get_the_ID());
                                 } ?>
                             <?php
                                 $popular_args = array(

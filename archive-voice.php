@@ -19,31 +19,29 @@
     <section class="campaign-lower campaign-lower-layout">
         <div class="campaign-lower__inner">
             <div class="campaign-lower__tab tab">
-                <!-- タブボタン -->
                 <div class="tab__list">
                     <?php
-                        $is_archive_page = is_post_type_archive('voice');
-                        $terms = get_terms(array(
-                            'taxonomy' => 'voice_category',
-                            'hide_empty' => true,
-                        ));
-                        ?>
-                    <!-- "ALL" タブボタン -->
+                    $is_archive_page = is_post_type_archive('voice');
+                    $terms = get_terms(array(
+                        'taxonomy' => 'voice_category',
+                        'hide_empty' => true,
+                    ));
+                    ?>
                     <a class="tab__button <?php echo $is_archive_page ? 'is-active' : ''; ?>"
                         href="<?php echo esc_url(get_post_type_archive_link('voice')); ?>">
                         ALL
                     </a>
                     <?php
                     if (!empty($terms)) :
-                        foreach ($terms as $term) :
-                            $is_active_term = is_tax('voice_category', $term->slug);
-                            ?>
+                    foreach ($terms as $term) :
+                    $is_active_term = is_tax('voice_category', $term->slug);
+                    ?>
                     <a class="tab__button <?php echo $is_active_term ? 'is-active' : ''; ?>"
                         href="<?php echo esc_url(get_term_link($term)); ?>">
                         <?php echo esc_html($term->name); ?>
                     </a>
                     <?php endforeach;
-                endif; ?>
+                    endif; ?>
                 </div>
                 <div class="tab-voice__contents">
                     <ul class="tab-voice__contents-content">
@@ -95,9 +93,10 @@
                         <?php endif; ?>
                     </ul>
                 </div>
-                <div class="voice-lower__pagenavi pagenavi">
-                    <?php wp_pagenavi(); ?>
-                </div>
             </div>
+            <div class="voice-lower__pagenavi pagenavi">
+                <?php wp_pagenavi(); ?>
+            </div>
+        </div>
     </section>
     <?php get_footer(); ?>
