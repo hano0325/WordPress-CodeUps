@@ -15,7 +15,7 @@
     </div>
 </div>
 <?php get_template_part('breadcrumb'); ?>
-<div class="main">
+<main>
     <div class="thanks-page thanks-page-layout">
         <div class="thanks-page__inner inner">
             <div class="thanks-page__text">
@@ -23,5 +23,5 @@
             </div>
         </div>
     </div>
-</div>
-<?php get_footer(); ?>
+    </div>
+    <?php get_footer(); ?>

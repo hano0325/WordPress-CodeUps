@@ -107,7 +107,7 @@ $site = esc_url( home_url( '/site/' ) );
                                     ?>
                             <li class="menu__nav-item-sub">
                                 <a href="<?php echo esc_url(get_term_link($term)); ?>">
-                                    <?php echo esc_html($term->name); // タームの名前を表示 ?>
+                                    <?php echo esc_html($term->name); ?>
                                 </a>
                             </li>
                             <?php
@@ -158,7 +158,7 @@ $site = esc_url( home_url( '/site/' ) );
                                     "post_type" => "fee",
                                     "orderby" => "date",
                                     "order" => "ASC",
-                                    "posts_per_page" => -1, // 全件取得
+                                    "posts_per_page" => -1,
                                 ];
                                 $footer_query = new WP_Query($args);
                                 ?>

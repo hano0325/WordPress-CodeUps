@@ -363,6 +363,10 @@ a {
 	text-align: center;
 }
 
+.body {
+	scroll-margin-top: 5rem;
+}
+
 .breadcrumb-layout {
 	margin-top: 0.2rem;
 }
@@ -1392,6 +1396,7 @@ a {
 
 .gallery-list__item {
 	-o-object-fit: cover;
+	cursor: pointer;
 	height: auto;
 	object-fit: cover;
 	width: 100%;
@@ -3907,6 +3912,10 @@ input[type=submit] {
 .wpcf7-not-valid {
 	background-color: rgba(255, 0, 0, 0.2);
 	border: 1px solid #C94800;
+}
+
+.wpcf7-response-output {
+	display: none;
 }
 
 .wpcf7-spinner {

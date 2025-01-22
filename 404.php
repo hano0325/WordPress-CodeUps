@@ -1,5 +1,5 @@
 <?php get_header(); ?>
-<div class="main">
+<main>
     <div class="error">
         <div class="error__breadcrumb">
             <?php get_template_part('breadcrumb-404'); ?>
@@ -22,5 +22,4 @@
             </div>
         </div>
     </div>
-</div>
-<?php get_footer(); ?>
+    <?php get_footer(); ?>

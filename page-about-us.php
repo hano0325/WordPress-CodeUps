@@ -48,7 +48,6 @@
             </div>
             <ul class="gallery__list gallery-list">
                 <?php
-                    // SCFで設定した繰り返しフィールドを取得
                     $gallery_images = SCF::get('gallery_images');
                     ?>
                 <?php if (!empty($gallery_images)) : ?>
